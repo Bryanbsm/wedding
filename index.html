@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth overflow-hidden">
+<html lang="es" class="dark scroll-smooth overflow-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -82,13 +82,13 @@
     </button>
 
     <!-- PRELOADER -->
-    <div id="preloader" class="fixed inset-0 z-[100] bg-cream dark:bg-navy-dark flex flex-col items-center justify-center text-center px-6 transition-all duration-700 ease-out">
+    <div id="preloader" class="fixed inset-0 z-[100] bg-[#070B19] dark:bg-navy-dark flex flex-col items-center justify-center text-center px-6 transition-all duration-700 ease-out">
         <div class="relative flex flex-col items-center gap-5">
-            <span class="font-serif text-3xl text-rosegold-400 dark:text-rosegold-200 tracking-[0.25em] animate-pulse">B & K</span>
+            <span class="font-serif text-3xl text-rosegold-200 tracking-[0.25em] animate-pulse">B & K</span>
             <div class="w-48 h-[2px] bg-rosegold-300/20 dark:bg-rosegold-300/10 rounded-full overflow-hidden">
                 <div id="progress-bar" class="w-0 h-full bg-gradient-to-r from-gold to-rosegold-300 transition-all duration-300 ease-out"></div>
             </div>
-            <span id="progress-text" class="text-[9px] tracking-[0.3em] text-slate-500 uppercase">Preparando invitación... 0%</span>
+            <span id="progress-text" class="text-[9px] tracking-[0.3em] text-slate-300 uppercase">Preparando invitación... 0%</span>
         </div>
     </div>
 
@@ -96,7 +96,7 @@
     <canvas id="ambient-canvas" class="fixed inset-0 pointer-events-none z-[5]"></canvas>
 
     <!-- Mobile Screen Wrapper (Restricting desktop view to elegant mobile preview) -->
-    <div class="relative w-full max-w-[450px] min-h-screen bg-navy-dark shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-x-hidden no-scrollbar flex flex-col justify-start">
+    <div class="relative w-full max-w-[450px] min-h-screen bg-transparent shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-x-hidden no-scrollbar flex flex-col justify-start">
         
 
         <!-- ENVELOPE GATE: Pantalla inicial del sobre cerrado -->

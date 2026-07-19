@@ -5,13 +5,95 @@
 
 body {
     -webkit-tap-highlight-color: transparent;
-    background-color: #05070F;
-                transition: background-color 0.5s ease; /*2.0*/
-
+    background-color: var(--page-bg);
+    color: var(--text-primary);
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
-        html.dark body {
-            background-color: #05070F; /*2.0*/
-        }
+
+:root {
+    color-scheme: light;
+    --page-bg: #F7EFE7;
+    --surface-bg: rgba(255, 255, 255, 0.9);
+    --surface-strong: #FFFDF9;
+    --text-primary: #111827;
+    --text-secondary: #475569;
+    --text-muted: #64748B;
+    --border-color: rgba(192, 114, 98, 0.28);
+    --accent: #C07262;
+}
+
+html.dark {
+    color-scheme: dark;
+    --page-bg: #05070F;
+    --surface-bg: rgba(13, 19, 43, 0.72);
+    --surface-strong: #0D132B;
+    --text-primary: #F8FAFC;
+    --text-secondary: #CBD5E1;
+    --text-muted: #94A3B8;
+    --border-color: rgba(226, 178, 166, 0.2);
+    --accent: #E2B2A6;
+}
+
+#preloader {
+    background-color: var(--surface-strong) !important;
+    color: var(--text-primary) !important;
+}
+html.dark #preloader {
+    background-color: #070B19 !important;
+    color: #F8FAFC !important;
+}
+
+.glass-card {
+    background: var(--surface-bg);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+html:not(.dark) .text-white,
+html:not(.dark) .text-slate-100,
+html:not(.dark) .text-slate-200,
+html:not(.dark) .text-slate-300 {
+    color: var(--text-primary) !important;
+}
+
+html:not(.dark) .text-slate-400,
+html:not(.dark) .text-slate-500,
+html:not(.dark) .text-slate-600,
+html:not(.dark) .text-slate-700,
+html:not(.dark) .text-slate-800 {
+    color: var(--text-secondary) !important;
+}
+
+html.dark .text-slate-400,
+html.dark .text-slate-500,
+html.dark .text-slate-600,
+html.dark .text-slate-700,
+html.dark .text-slate-800,
+html.dark .text-slate-300,
+html.dark .text-slate-200,
+html.dark .text-slate-100,
+html.dark .text-white {
+    color: var(--text-primary) !important;
+}
+
+html.dark .text-slate-400 {
+    color: #E2B2A6 !important;
+}
+
+html:not(.dark) [class*="bg-navy-dark"],
+html:not(.dark) [class*="bg-navy-medium"],
+html:not(.dark) [class*="bg-navy-light"] {
+    background-color: var(--surface-bg) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+html:not(.dark) .bg-white\/60,
+html:not(.dark) .bg-white\/80,
+html:not(.dark) .bg-white {
+    background-color: rgba(255, 255, 255, 0.95) !important;
+    color: var(--text-primary) !important;
+}
 /* Glassmorphism custom definition */
 /* Glassmorphism - Modo Claro por defecto */
 .glass-card {

@@ -10,9 +10,39 @@ lucide.createIcons();
   // --- Lógica del Modo Día/Noche ---
         const themeToggleBtn = document.getElementById('theme-toggle');
         const htmlElement = document.documentElement;
+        const storageKey = 'wedding-theme-mode';
 
-        themeToggleBtn.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
+        function getTimeBasedTheme() {
+            const hour = new Date().getHours();
+            return hour >= 18 || hour < 6 ? 'dark' : 'light';
+        }
+
+        function applyTheme(mode) {
+            const isDark = mode === 'dark';
+            htmlElement.classList.toggle('dark', isDark);
+            htmlElement.classList.toggle('light', !isDark);
+            if (themeToggleBtn) {
+                themeToggleBtn.setAttribute('aria-pressed', String(isDark));
+                themeToggleBtn.title = isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
+            }
+        }
+
+        function getInitialTheme() {
+            const saved = localStorage.getItem(storageKey);
+            if (saved === 'dark' || saved === 'light') {
+                return saved;
+            }
+            return getTimeBasedTheme();
+        }
+
+        let currentTheme = getInitialTheme();
+        applyTheme(currentTheme);
+
+        themeToggleBtn?.addEventListener('click', () => {
+            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            currentTheme = nextTheme;
+            localStorage.setItem(storageKey, nextTheme);
+            applyTheme(nextTheme);
             if (navigator.vibrate) navigator.vibrate(50); // Pequeña vibración al cambiar
         });
 
