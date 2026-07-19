@@ -10,28 +10,68 @@ body {
     transition: background-color 0.5s ease, color 0.5s ease;
 }
 
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle at 12% 12%, rgba(200, 163, 106, 0.08) 0 1px, transparent 2px),
+        radial-gradient(circle at 84% 16%, rgba(60, 110, 154, 0.07) 0 1px, transparent 2px),
+        radial-gradient(circle at 18% 84%, rgba(200, 163, 106, 0.05) 0 1px, transparent 2px),
+        linear-gradient(135deg, rgba(255,255,255,0.55), rgba(255,255,255,0));
+    background-size: 250px 250px, 220px 220px, 280px 280px, auto;
+    opacity: 0.95;
+    mix-blend-mode: multiply;
+}
+
 :root {
     color-scheme: light;
-    --page-bg: #F7EFE7;
-    --surface-bg: rgba(255, 255, 255, 0.9);
-    --surface-strong: #FFFDF9;
-    --text-primary: #111827;
-    --text-secondary: #475569;
-    --text-muted: #64748B;
-    --border-color: rgba(192, 114, 98, 0.28);
-    --accent: #C07262;
+    --page-bg: #FAF8F4;
+    --page-bg-alt: #F4F1EC;
+    --surface-bg: rgba(255, 255, 255, 0.95);
+    --surface-strong: #FFFFFF;
+    --text-primary: #2B2B2B;
+    --text-secondary: #5C5C5C;
+    --text-muted: #9E9E9E;
+    --border-color: #E5DED4;
+    --primary: #3C6E9A;
+    --primary-dark: #2D5678;
+    --primary-light: #DCE7F0;
+    --accent: #C8A36A;
+    --accent-dark: #A67C45;
+    --accent-soft: #E5C992;
+    --envelope-outer: #DCE7F0;
+    --envelope-inner: #FAF8F4;
 }
 
 html.dark {
     color-scheme: dark;
     --page-bg: #05070F;
+    --page-bg-alt: #070B19;
     --surface-bg: rgba(13, 19, 43, 0.72);
     --surface-strong: #0D132B;
     --text-primary: #F8FAFC;
     --text-secondary: #CBD5E1;
     --text-muted: #94A3B8;
     --border-color: rgba(226, 178, 166, 0.2);
+    --primary: #DCE7F0;
+    --primary-dark: #2D5678;
+    --primary-light: #DCE7F0;
     --accent: #E2B2A6;
+    --envelope-outer: #182a52;
+    --envelope-inner: #0B132B;
+}
+
+.invitation-shell {
+    background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(250,248,244,0.97));
+    color: var(--text-primary);
+    box-shadow: 0 14px 45px rgba(16,24,40,0.08);
+}
+
+html.dark .invitation-shell {
+    background: transparent;
+    box-shadow: none;
 }
 
 #preloader {
@@ -46,7 +86,22 @@ html.dark #preloader {
 .glass-card {
     background: var(--surface-bg);
     color: var(--text-primary);
-    border-color: var(--border-color);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+html.dark .glass-card {
+    background: rgba(13, 19, 43, 0.45);
+    border: 1px solid rgba(226, 178, 166, 0.15);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.glass-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
 }
 
 html:not(.dark) .text-white,
@@ -62,6 +117,10 @@ html:not(.dark) .text-slate-600,
 html:not(.dark) .text-slate-700,
 html:not(.dark) .text-slate-800 {
     color: var(--text-secondary) !important;
+}
+
+html:not(.dark) .text-slate-400 {
+    color: var(--text-muted) !important;
 }
 
 html.dark .text-slate-400,
@@ -83,7 +142,7 @@ html.dark .text-slate-400 {
 html:not(.dark) [class*="bg-navy-dark"],
 html:not(.dark) [class*="bg-navy-medium"],
 html:not(.dark) [class*="bg-navy-light"] {
-    background-color: var(--surface-bg) !important;
+    background-color: var(--surface-strong) !important;
     color: var(--text-primary) !important;
     border-color: var(--border-color) !important;
 }
@@ -91,25 +150,70 @@ html:not(.dark) [class*="bg-navy-light"] {
 html:not(.dark) .bg-white\/60,
 html:not(.dark) .bg-white\/80,
 html:not(.dark) .bg-white {
-    background-color: rgba(255, 255, 255, 0.95) !important;
+    background-color: rgba(255, 255, 255, 0.96) !important;
     color: var(--text-primary) !important;
 }
-/* Glassmorphism custom definition */
-/* Glassmorphism - Modo Claro por defecto */
-.glass-card {
-    background: rgba(255, 255, 255, 0.75); /* Fondo claro translucido */
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(192, 114, 98, 0.3); /* Borde rosegold más marcado */
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-    transition: background 0.5s ease, border-color 0.5s ease;
+
+html:not(.dark) [class*="bg-gold"] {
+    background-color: rgba(200, 163, 106, 0.16) !important;
+    color: var(--accent-dark) !important;
 }
 
-/* Glassmorphism - Modo Oscuro */
-.dark .glass-card {
-    background: rgba(13, 19, 43, 0.45);
-    border: 1px solid rgba(226, 178, 166, 0.15);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+html:not(.dark) .btn-gold-border {
+    position: relative;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    color: #FFFFFF;
+    border: 1px solid transparent;
+    box-shadow: 0 10px 24px rgba(60, 110, 154, 0.16);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+html:not(.dark) .btn-gold-border:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+    box-shadow: 0 12px 28px rgba(60, 110, 154, 0.22);
+    transform: translateY(-1px);
+}
+
+html:not(.dark) .btn-gold-border:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+html:not(.dark) input,
+html:not(.dark) textarea,
+html:not(.dark) select {
+    background-color: var(--surface-strong) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+    border-radius: 16px !important;
+    padding: 0.9rem 1rem !important;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);
+}
+
+html:not(.dark) input:focus,
+html:not(.dark) textarea:focus,
+html:not(.dark) select:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(60, 110, 154, 0.14), 0 6px 16px rgba(200, 163, 106, 0.16) !important;
+}
+
+html:not(.dark) #envelope-gate {
+    background: linear-gradient(135deg, var(--primary-light), var(--surface-strong) 70%) !important;
+    color: var(--text-primary);
+}
+
+html:not(.dark) #envelope-flap {
+    background: linear-gradient(150deg, var(--primary) 0%, var(--primary-dark) 70%) !important;
+    border-bottom: 1px solid rgba(200, 163, 106, 0.35) !important;
+}
+
+html:not(.dark) #envelope-scene .absolute.inset-0[style*="background: linear-gradient(165deg"] {
+    background: linear-gradient(165deg, var(--envelope-outer), var(--envelope-inner) 65%) !important;
+}
+
+html:not(.dark) footer {
+    background: rgba(255,255,255,0.55) !important;
+    border-color: var(--border-color) !important;
 }
 
 /* Floating orbs keyframes */
