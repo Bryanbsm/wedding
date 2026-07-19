@@ -1,0 +1,216 @@
+/* ============================================================
+   Estilos principales de la invitación de boda
+   Se separaron del HTML para mantener el marcado más limpio.
+============================================================ */
+
+body {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #05070F;
+}
+
+/* Glassmorphism custom definition */
+/* Glassmorphism - Modo Claro por defecto */
+.glass-card {
+    background: rgba(255, 255, 255, 0.75); /* Fondo claro translucido */
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(192, 114, 98, 0.3); /* Borde rosegold más marcado */
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+    transition: background 0.5s ease, border-color 0.5s ease;
+}
+
+/* Glassmorphism - Modo Oscuro */
+.dark .glass-card {
+    background: rgba(13, 19, 43, 0.45);
+    border: 1px solid rgba(226, 178, 166, 0.15);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+/* Floating orbs keyframes */
+@keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-30px) scale(1.08); }
+}
+.animate-float {
+    animation: float 10s ease-in-out infinite;
+}
+
+/* Hide scrollbar but keep functionality */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Smooth scroll-reveal styles */
+.reveal-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-element.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Custom focus rings and form enhancements */
+input:focus, textarea:focus {
+    outline: none;
+    border-color: #E2B2A6 !important;
+    box-shadow: 0 0 15px rgba(226, 178, 166, 0.3);
+}
+
+/* Animated border for buttons */
+.btn-gold-border {
+    position: relative;
+    background: linear-gradient(90deg, #D4AF37, #E2B2A6);
+    background-size: 200% auto;
+    transition: 0.5s;
+}
+.btn-gold-border:active {
+    transform: scale(0.96);
+    background-position: right center;
+}
+
+/* -------------------------------------------------------------
+   ENVELOPE GATE (Sobre de bienvenida)
+------------------------------------------------------------- */
+#envelope-scene {
+    perspective: 1400px;
+    animation: envelope-breathe 4.5s ease-in-out infinite;
+    transition: transform 0.25s ease;
+}
+#envelope-scene.is-pressed {
+    transform: scale(0.97);
+}
+#envelope-scene.is-opening {
+    animation-play-state: paused;
+}
+@keyframes envelope-breathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+#envelope-flap {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    transform: rotateX(0deg);
+    transform-origin: top center;
+    transition: transform 1.15s cubic-bezier(0.65, 0, 0.35, 1), filter 1.15s ease;
+}
+#envelope-flap.is-open {
+    transform: rotateX(-172deg);
+    filter: brightness(0.8);
+}
+
+/* Brillo que recorre la solapa, invitando a tocar */
+#flap-sheen {
+    background: linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.16) 45%, transparent 65%);
+    transform: translateX(-120%);
+    animation: sheen-sweep 5s ease-in-out infinite;
+}
+@keyframes sheen-sweep {
+    0%, 45% { transform: translateX(-120%); }
+    65%, 100% { transform: translateX(120%); }
+}
+
+/* Lacre: anillo pulsante invitando a tocar */
+.seal-pulse-ring {
+    animation: seal-pulse 2.6s ease-out infinite;
+}
+@keyframes seal-pulse {
+    0% { transform: scale(1); opacity: 0.55; }
+    70%, 100% { transform: scale(1.75); opacity: 0; }
+}
+
+/* Lacre partiéndose en dos mitades */
+#seal-left, #seal-right {
+    transition: transform 0.65s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.5s ease 0.1s;
+}
+#wax-seal.is-open #seal-left {
+    transform: translate(-9px, 16px) rotate(-22deg);
+    opacity: 0;
+}
+#wax-seal.is-open #seal-right {
+    transform: translate(9px, 16px) rotate(22deg);
+    opacity: 0;
+}
+#wax-seal .seal-label,
+#wax-seal .seal-pulse-ring {
+    transition: opacity 0.35s ease;
+}
+#wax-seal.is-open .seal-label,
+#wax-seal.is-open .seal-pulse-ring {
+    opacity: 0;
+}
+
+/* Carta que se desliza fuera del sobre */
+#letter-card {
+    opacity: 0;
+    transition: transform 5.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease;
+}
+#letter-card.is-open {
+    transform: translate(-50%, -130px) scale(3.04);
+    opacity: 1;
+    filter: blur(0.2px);
+}
+
+#envelope-gate {
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+#envelope-gate.is-hidden {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.98);
+    pointer-events: none;
+}
+
+/* Dress-code tooltip */
+#dress-tooltip {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* Respeta a quienes prefieren menos movimiento en pantalla */
+@media (prefers-reduced-motion: reduce) {
+    #envelope-scene { animation: none !important; }
+    #flap-sheen { animation: none !important; opacity: 0; }
+    .seal-pulse-ring { animation: none !important; opacity: 0; }
+    .animate-float, .animate-bounce { animation: none !important; }
+    * { scroll-behavior: auto !important; }
+}
+
+/* Success screen celebration */
+.confetti {
+    position: absolute;
+    top: -35px;
+    width: 8px;
+    height: 8px;
+    background-color: #E2B2A6;
+    border-radius: 60%;
+    animation: fall 4s linear infinite;
+}
+@keyframes fall {
+    0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+
+.member-toggle + .switch-track .switch-si{
+    display:none;
+}
+
+.member-toggle:checked + .switch-track{
+    background:#22c55e;
+}
+
+.member-toggle:checked + .switch-track .switch-thumb{
+    transform:translateX(32px);
+}
+
+.member-toggle:checked + .switch-track .switch-no{
+    display:none;
+}
+
+.member-toggle:checked + .switch-track .switch-si{
+    display:block;
+}

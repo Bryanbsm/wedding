@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth overflow-hidden">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Bryan & Katherin - ¡Nos Casamos! 14.11.2026</title>
+
+    <!-- ============================================================
+         VISTA PREVIA AL COMPARTIR (WhatsApp, Facebook, iMessage, etc.)
+    ============================================================ -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bryan & Katherin" > 
+    <meta property="og:description" content="Toca para abrir tu invitación 💌 14 de Noviembre de 2026 · Belalcázar, Caldas">
+    <meta property="og:image" content="https://bryanbsm.github.io/invitacion1/assets/preview-sobre.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://bryanbsm.github.io/invitacion1/index.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bryan & Katherin" >
+    <meta name="twitter:description" content="14 de Noviembre de 2026 · Belalcázar, Caldas">
+    <meta name="twitter:image" content="https://bryanbsm.github.io/invitacion1/assets/preview-sobre.png">
+
+    <!-- Favicon / ícono al agregar a inicio del celular (mismo lacre de la invitación) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <meta name="theme-color" content="#0B132B">
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Añade esta línea
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            dark: '#070B19',
+                            medium: '#0D132B',
+                            light: '#1D2A44',
+                        },
+                        rosegold: {
+                            100: '#FAF0EE',
+                            200: '#F1D1CA',
+                            300: '#E2B2A6',
+                            400: '#D29082',
+                            500: '#C07262',
+                        },
+                        gold: {
+                            light: '#F5E6C8',
+                            DEFAULT: '#D4AF37',
+                            dark: '#AA820A'
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        luxury: ['"Alex Brush"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="flex justify-center items-center min-h-screen text-[17px] text-navy-dark dark:text-slate-100 font-sans antialiased overflow-x-hidden overflow-hidden selection:bg-rosegold-300 selection:text-navy-dark transition-colors duration-500 dark:bg-[#05070F] bg-[#FBF6EC]">
+
+
+
+    <!-- Mobile Screen Wrapper (Restricting desktop view to elegant mobile preview) -->
+    <div class="relative w-full max-w-[450px] min-h-screen bg-navy-dark shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-x-hidden no-scrollbar flex flex-col justify-start">
+        
+        <!-- Botón animado de Modo Día / Noche -->
+<button id="theme-toggle" class="fixed bottom-6 right-6 z-[100] p-3 rounded-full bg-white/60 dark:bg-rosegold-300/10 backdrop-blur-md border border-rosegold-400/50 dark:border-rosegold-300/30 text-rosegold-600 dark:text-rosegold-300 shadow-xl transition-all duration-700 hover:scale-110 flex items-center justify-center overflow-hidden opacity-0 pointer-events-none translate-y-10">
+    <i data-lucide="sun" id="theme-icon-sun" class="w-6 h-6 hidden"></i>
+    <i data-lucide="moon" id="theme-icon-moon" class="w-6 h-6"></i>
+</button>
+        <!-- ENVELOPE GATE: Pantalla inicial del sobre cerrado -->
+        <div id="envelope-gate" class="fixed inset-0 max-w-[450px] mx-auto z-50 flex flex-col items-center justify-center bg-navy-dark px-6 text-center select-none">
+            <div class="absolute inset-0 pointer-events-none overflow-hidden">
+                <div class="absolute top-[15%] -left-16 w-[260px] h-[260px] rounded-full bg-rosegold-500/10 blur-[100px] animate-float"></div>
+                <div class="absolute bottom-[15%] -right-16 w-[260px] h-[260px] rounded-full bg-gold/10 blur-[100px] animate-float" style="animation-delay:-4s;"></div>
+            </div>
+
+            <div class="relative z-10 flex flex-col items-center gap-8">
+                <span class="text-[15px] tracking-[0.35em] text-rosegold-300/60 uppercase font-medium">Tienes una invitación</span>
+
+                <div id="envelope-scene" class="relative w-[240px] h-[168px] cursor-pointer">
+                    <!-- Sombra flotante debajo del sobre -->
+                    <div class="absolute -bottom-7 left-1/2 -translate-x-1/2 w-[80%] h-4 bg-black/50 blur-lg rounded-full"></div>
+
+                    <!-- Cuerpo del sobre -->
+                    <div class="absolute inset-0 rounded-[3px] overflow-hidden shadow-[0_25px_55px_-15px_rgba(0,0,0,0.75)]">
+                        <div class="absolute inset-0" style="background: linear-gradient(165deg, #182a52, #0B132B 65%);"></div>
+
+                        <!-- Pliegue lateral izquierdo -->
+                        <div class="absolute inset-y-0 left-0 w-1/2" style="clip-path: polygon(0 0, 100% 50%, 0 100%); background: linear-gradient(115deg, rgba(0,0,0,0.30), rgba(255,255,255,0.02));"></div>
+                        <!-- Pliegue lateral derecho -->
+                        <div class="absolute inset-y-0 right-0 w-1/2" style="clip-path: polygon(100% 0, 0 50%, 100% 100%); background: linear-gradient(245deg, rgba(0,0,0,0.30), rgba(255,255,255,0.02));"></div>
+                        <!-- Pliegue inferior -->
+                        <div class="absolute inset-x-0 bottom-0 h-full" style="clip-path: polygon(0 100%, 50% 38%, 100% 100%); background: linear-gradient(160deg, rgba(212,175,55,0.10), rgba(226,178,166,0.05));"></div>
+
+                        <!-- Borde doble dorado (detalle de lujo) -->
+                        <div class="absolute inset-[3px] border border-gold/25 rounded-[2px] pointer-events-none"></div>
+                        <div class="absolute inset-0 border border-gold/10 rounded-[3px] pointer-events-none"></div>
+                    </div>
+
+                    <!-- Carta que se asoma y luego se desliza hacia afuera -->
+                    <!--<div id="letter-card" class="absolute left-1/2 -translate-x-1/2 top-[24px] w-[80%] h-[120px] rounded-[2px] z-10 flex items-center justify-center gap-2"
+                         style="background: linear-gradient(180deg,#FBF6EC,#F1E7D4); box-shadow: 0 4px 10px rgba(0,0,0,0.35); border: 1px solid rgba(212,175,55,0.4);">
+                        <span class="font-serif italic text-[13px] tracking-[0.15em]" style="color:#3a2f1d;">B</span>
+                        <span class="font-serif text-[11px]" style="color:#AA820A;">&</span>
+                        <span class="font-serif italic text-[13px] tracking-[0.15em]" style="color:#3a2f1d;">K</span>
+                    </div> -->
+                    <div id="letter-card" class="absolute left-1/2 -translate-x-1/2 top-[24px] w-[80%] h-[120px] rounded-[2px] z-10 flex flex-col items-center justify-center gap-1"
+                         style="background: linear-gradient(180deg,#FBF6EC,#F1E7D4); box-shadow: 0 4px 10px rgba(0,0,0,0.35); border: 1px solid rgba(212,175,55,0.4);">
+                        
+                        <div class="flex items-center justify-center gap-2">
+                            <span class="font-serif italic text-[13px] tracking-[0.15em]" style="color:#3a2f1d;">Bryan</span>
+                            <span class="font-serif text-[11px]" style="color:#AA820A;">&</span>
+                            <span class="font-serif italic text-[13px] tracking-[0.15em]" style="color:#3a2f1d;">Katherin</span>
+                        </div>
+
+                        <img src="assets/anillos.png" alt="Anillos" class="w-11 h-11 object-contain opacity-80 mt-1">
+                    </div>
+
+                    <!-- Solapa superior (triángulo) con brillo -->
+                    <div id="envelope-flap" class="absolute top-0 left-0 w-full h-[88px] z-20 overflow-hidden" style="clip-path: polygon(0 0, 100% 0, 50% 100%); background: linear-gradient(150deg, #1c2f5c, #0B132B 70%); border-bottom: 1px solid rgba(212,175,55,0.3);">
+                        <div id="flap-sheen" class="absolute inset-0"></div>
+                    </div>
+
+                    <!-- Lacre rojo con iniciales, partido en dos mitades al abrir -->
+                    <div id="wax-seal" class="absolute left-1/2 top-[88px] w-[54px] h-[54px] z-30" style="transform: translate(-50%, -50%);">
+                        <span class="seal-pulse-ring absolute inset-0 rounded-full border-2 border-rosegold-200/50"></span>
+                        <div id="seal-left" class="absolute inset-0 rounded-full" style="clip-path: inset(0 50% 0 0); background: radial-gradient(circle at 34% 30%, #d24f42, #7a1712 80%); box-shadow: 0 6px 14px rgba(0,0,0,0.45);"></div>
+                        <div id="seal-right" class="absolute inset-0 rounded-full" style="clip-path: inset(0 0 0 50%); background: radial-gradient(circle at 34% 30%, #d24f42, #7a1712 80%); box-shadow: 0 6px 14px rgba(0,0,0,0.45);"></div>
+                        <span class="seal-label absolute inset-0 flex items-center justify-center font-serif text-white text-base tracking-wide" style="text-shadow: 0 1px 1px rgba(0,0,0,0.4);">B&K</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center gap-2">
+                    <p class="text-[13px] tracking-widest text-slate-400 uppercase">Toca el sobre o desliza para abrir</p>
+                    <div class="text-rosegold-300/60 animate-bounce">
+                        <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Luxury Ambient Background Orbs -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+            <div class="absolute top-[10%] -left-20 w-[300px] h-[300px] rounded-full bg-rosegold-500/10 blur-[100px] animate-float"></div>
+            <div class="absolute top-[45%] -right-20 w-[350px] h-[350px] rounded-full bg-gold/10 blur-[120px] animate-float" style="animation-delay: -3s;"></div>
+            <div class="absolute bottom-[10%] left-[-100px] w-[250px] h-[250px] rounded-full bg-rosegold-400/10 blur-[90px] animate-float" style="animation-delay: -6s;"></div>
+        </div>
+
+        <!-- CONTENT OVERLAY (Safe Zone) -->
+        <div class="relative z-10 w-full flex flex-col">
+
+            <!-- SECTION 1: HERO (PORTADA) -->
+            <section id="hero" class="relative min-h-screen w-full flex flex-col justify-between items-center px-6 py-16 text-center select-none transition-all duration-700 ease-out">
+                
+                <!-- Luxury Logo Monogram -->
+                <div class="mt-4 flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full border border-rosegold-300/30 flex items-center justify-center font-serif text-2xl text-rosegold-300 backdrop-blur-md shadow-[0_0_15px_rgba(226,178,166,0.15)] animate-pulse">
+                        B&K
+                    </div>
+                   <!--
+                      <span class="text-[9px] tracking-[0.3em] text-rosegold-300/60 uppercase mt-3 font-medium"> Con la bendición de Dios y de nuestras familias 
+                        Tenemos el honor de invitarlos a celebrar nuestra boda.</span>  
+                    <h3 class="font-serif text-3xl text-white mt-1">Con la bendición de Dios y de nuestras familias 
+                        Tenemos el honor de invitarlos a celebrar nuestra boda.</h3>-->
+                        <h1 class="font-serif italic text-xl text-rosegold-200/70 leading-7 max-w-[460px] mx-auto mt-2">Muy pronto tendra lugar unos de los momentos mas importantes y felices de nuestras vidas. <br> Con la bendición de Dios, tenemos el honor de invitarlos a celebrar Nuestra Boda.</h1>
+                      
+                </div>
+
+                <!-- Couples Name and Title -->
+                <div class="my-auto space-y-6">
+                    <div class="space-y-2">
+                        <h1 class="font-serif text-4xl font-light tracking-wide text-white leading-relaxed">
+                            Bryan <br>
+                            <p class="font-serif text-lg tracking-[0.2em] text-rosegold-200/80 italic mt-1">Martínez Mejia</p>
+                            <span class="text-rosegold-300 text-3xl italic font-serif">&</span><br>
+                            Katherin
+                        </h1>
+                        <p class="font-serif text-lg tracking-[0.2em] text-rosegold-200/80 italic mt-1">Morales Arcila</p>
+                    </div>
+                    
+                    <div class="w-12 h-[1px] bg-gradient-to-r from-transparent via-rosegold-300 to-transparent mx-auto my-4"></div>
+
+                    <!-- Date Tag -->
+                    <div class="space-y-1">
+                        <p class="font-sans text-sm tracking-[0.25em] text-gold/90 uppercase font-light">14 . Noviembre . 2026</p>
+                        <p class="text-[10px] tracking-widest text-slate-400/80 uppercase">Belalcázar, Caldas</p>
+                    </div>
+                </div>
+
+                <!-- Pulsing Scroll indicator -->
+                <div class="flex flex-col items-center gap-2">
+                    <span class="text-[9px] tracking-[0.4em] text-rosegold-300/50 uppercase font-light">Desliza para descubrir</span>
+                    <div class="text-rosegold-300/60 animate-bounce mt-1">
+                        <i data-lucide="chevron-down" class="w-5 h-5"></i>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- SECTION 2: NUESTRA HISTORIA (Scroll-driven Word Reveal) -->
+            <section id="historia" class="min-h-screen w-full flex flex-col justify-center px-8 py-20 relative">
+                <div class="absolute inset-0 bg-[url('assets/foto1.jpg')] bg-cover bg-fixed bg-center opacity-[0.09] pointer-events-none z-0"></div>
+                <div class="text-center mb-12 reveal-element">
+                    <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">El Destino</span>
+                    <h2 class="font-serif text-3xl text-white mt-1">Nuestra Historia</h2>
+                    <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
+                </div>
+
+                <!-- Word-by-word reveal target paragraph -->
+                <div class="glass-card rounded-2xl p-8 relative overflow-hidden">
+                    <!-- Elegant background quote marks -->
+                    <span class="absolute top-2 left-4 text-7xl font-serif text-rosegold-300/5 select-none">“</span>
+                    
+                    <p id="story-text" class="text-center font-serif text-lg leading-relaxed text-slate-300/90 italic tracking-wide">
+                        Hay momentos en la vida que son mágicos y personas que se convierten en nuestro hogar. 
+                        Desde el primer día supimos que queríamos escribir un siempre juntos. 
+                        Hoy decidimos dar el paso más importante de nuestras vidas, uniendo nuestros caminos en un solo destino. 
+                        Queremos celebrar este inicio eterno junto a ti.
+                    </p>
+
+                    <span class="absolute bottom-[-20px] right-4 text-7xl font-serif text-rosegold-300/5 select-none">”</span>
+                </div>
+
+                <div class="mt-8 text-center reveal-element">
+                    <p class="font-sans text-xs tracking-widest text-rosegold-300/70 font-light italic">"El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."</p>
+                </div>
+            </section>
+
+               <!-- SECTION 3: AGENDA DEL EVENTO -->
+            <section id="agenda" class="w-full px-6 py-16 relative reveal-element reveal-zoom-in">
+                <div class="text-center mb-10">
+                    <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">El Cronograma</span>
+                    <h2 class="font-serif text-3xl text-white mt-1">Agenda del Evento</h2>
+                    <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
+                </div>
+
+                <div class="relative max-w-[320px] mx-auto">
+                    <div class="absolute left-[17px] top-2 bottom-2 w-[1px] bg-gradient-to-b from-gold/50 via-rosegold-300/30 to-gold/50"></div>
+
+                    <div class="space-y-8 relative">
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-9 h-9 rounded-full bg-navy-dark border border-gold flex items-center justify-center text-gold z-10 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="church" class="w-4.5 h-4.5"></i>
+                            </div>
+                            <div class="flex-1 bg-navy-light/30 border border-rosegold-300/10 rounded-2xl p-4 glass-card">
+                                <span class="font-sans text-[10px] tracking-wider text-gold font-semibold uppercase">11:30 AM</span>
+                                <h4 class="font-serif text-base text-white mt-0.5">Ceremonia Religiosa</h4>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-9 h-9 rounded-full bg-navy-dark border border-rosegold-300 flex items-center justify-center text-rosegold-300 z-10 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="camera" class="w-4.5 h-4.5"></i>
+                            </div>
+                            <div class="flex-1 bg-navy-light/30 border border-rosegold-300/10 rounded-2xl p-4 glass-card">
+                                <span class="font-sans text-[10px] tracking-wider text-rosegold-300 font-semibold uppercase">01:30 PM</span>
+                                <h4 class="font-serif text-base text-white mt-0.5">Sesión de Fotos</h4>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-9 h-9 rounded-full bg-navy-dark border border-gold flex items-center justify-center text-gold z-10 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="glass-water" class="w-4.5 h-4.5"></i>
+                            </div>
+                            <div class="flex-1 bg-navy-light/30 border border-rosegold-300/10 rounded-2xl p-4 glass-card">
+                                <span class="font-sans text-[10px] tracking-wider text-gold font-semibold uppercase">02:00 PM</span>
+                                <h4 class="font-serif text-base text-white mt-0.5">Recepción de Invitados</h4>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-9 h-9 rounded-full bg-navy-dark border border-rosegold-300 flex items-center justify-center text-rosegold-300 z-10 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="sparkles" class="w-4.5 h-4.5"></i>
+                            </div>
+                            <div class="flex-1 bg-navy-light/30 border border-rosegold-300/10 rounded-2xl p-4 glass-card">
+                                <span class="font-sans text-[10px] tracking-wider text-rosegold-300 font-semibold uppercase">03:00 PM</span>
+                                <h4 class="font-serif text-base text-white mt-0.5">Brindis de Honor</h4>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-6 group">
+                            <div class="w-9 h-9 rounded-full bg-navy-dark border border-gold flex items-center justify-center text-gold z-10 transition-transform duration-300 group-hover:scale-110">
+                                <i data-lucide="utensils" class="w-4.5 h-4.5"></i>
+                            </div>
+                            <div class="flex-1 bg-navy-light/30 border border-rosegold-300/10 rounded-2xl p-4 glass-card">
+                                <span class="font-sans text-[10px] tracking-wider text-gold font-semibold uppercase">03:30 PM</span>
+                                <h4 class="font-serif text-base text-white mt-0.5">Almuerzo de Gala</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+   <!-- SECTION 7DETALLES DEL EVENTO -->
+            <section class="min-h-screen w-full flex flex-col justify-center px-6 py-16 relative">
+                <div class="text-center mb-10 reveal-element">
+                    <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">La Celebración</span>
+                    <h2 class="font-serif text-3xl text-white mt-1">Detalles de la Boda</h2>
+                    <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
+                </div>
+
+                <!-- Ceremony Elegant Card -->
+                <div class="glass-card rounded-3xl p-8 relative space-y-8 overflow-hidden reveal-element">
+                    <!-- Icon Header Foto Iglesia-->
+                     <div class="absolute inset-0 bg-[url('assets/iglesia.jpg')] bg-cover bg-center opacity-20 blur-[1px] z-0 transition-all duration-1000"></div>
+                    <div class="absolute inset-0 bg-navy-dark/60 z-0"></div>
+                     <!-- Icon Header -->
+                 <div class="relative z-10">
+                        <div class="flex justify-center mb-6">
+                            <div class="p-4 rounded-full bg-rosegold-300/5 border border-rosegold-300/20 text-rosegold-300">
+                                <i data-lucide="church" class="w-8 h-8"></i>
+                            </div>
+                        </div>
+
+                    <!-- Title & Venue -->
+                    <div class="text-center space-y-2 mb-6">
+                        <h3 class="font-serif text-2xl text-white tracking-wide font-light">La Ceremonia</h3>
+                        <p class="font-serif text-rosegold-300 text-lg italic">Parroquia La Inmaculada</p>
+                        <p class="text-xs text-slate-400">Belalcázar, Caldas</p>
+                    </div>
+
+                    <div class="w-full h-[1px] bg-gradient-to-r from-transparent via-rosegold-300/20 to-transparent"></div>
+
+                    <!-- Event Logistics -->
+                    <div class="grid grid-cols-2 gap-4 text-center">
+                        <div class="space-y-1">
+                            <span class="text-[9px] tracking-widest text-gold uppercase font-medium">Hora</span>
+                            <p class="text-sm font-light text-slate-200 mt-1">04:00 PM</p>
+                        </div>
+                         
+                        <!-- Tooltip Interactivo para Vestimenta -->
+                        <div class="space-y-1 cursor-pointer group relative" onclick="showDressCodeAlert()">
+                            <span class="text-[9px] tracking-widest text-gold uppercase font-medium flex justify-center items-center gap-1">
+                                Vestimenta
+                                <i data-lucide="info" class="w-3 h-3 text-rosegold-400 group-hover:animate-pulse"></i>
+                            </span>
+                            <p class="text-sm font-light text-slate-200 mt-1 underline decoration-dashed decoration-rosegold-300/50 underline-offset-4">Gala / Formal</p>
+                        </div>
+                    </div>
+
+                    <!-- Location CTA Button -->
+                    <div class="pt-4">
+                        <a href="https://maps.app.goo.gl/CxwR12ZooaeQFiVR8" 
+                           target="_blank" 
+                           class="btn-gold-border text-navy-dark text-xs font-semibold tracking-widest uppercase py-3 px-6 rounded-full flex items-center justify-center gap-2 shadow-lg shadow-rosegold-400/20 mx-auto w-full max-w-[240px]">
+                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            Ver Ubicación
+                        </a>
+                    </div>
+                </div>
+                </section>
+
+
+           
+
+<!-- SECTION 5 FECHA (Calendario interactivo + Cuenta Regresiva) -->
+            <section class="w-full px-6 py-12 flex flex-col items-center">
+                <div class="text-center mb-6 reveal-element">
+                    <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Guarda la Fecha</span>
+                    <h2 class="font-serif text-3xl text-white mt-1">Fecha</h2>
+                    <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
+                </div>
+
+                <div class="w-full glass-card rounded-3xl p-6 text-center reveal-element">
+
+                    <!-- Calendario interactivo -->
+                    <div class="flex items-center justify-center gap-2 mb-4">
+                        <span class="font-serif text-lg tracking-widest text-white">Noviembre</span>
+                        <span class="w-1 h-1 rounded-full bg-rosegold-300/50"></span>
+                        <span class="font-sans text-sm tracking-widest text-rosegold-300/80">2026</span>
+                    </div>
+
+                    <div class="grid grid-cols-7 gap-y-2 text-center mb-1">
+                        <span class="text-[9px] tracking-widest text-slate-500 uppercase">D</span>
+                        <span class="text-[9px] tracking-widest text-slate-500 uppercase">L</span>
+                        <span class="text-[9px] tracking-widest text-slate-500 uppercase">M</span>
+                        <span class="text-[9px] tracking-widest text-slate-500 uppercase">M</span>
+                        <span class="text-[9px] tracking-widest text-slate-500 uppercase">J</span>
+                        <span class="text-[9px] tracking-widest text-slate-500 uppercase">V</span>
+                        <span class="text-[9px] tracking-widest text-slate-500 uppercase">S</span>
+                    </div>
+
+                    <div id="calendar-grid" class="grid grid-cols-7 gap-y-2 text-center place-items-center"></div>
+
+                    <div class="w-10 h-[1px] bg-rosegold-300/20 mx-auto my-5"></div>
+
+                    <!-- Faltan X días -->
+                    <div class="mb-5">
+                    <!--    <span id="days-until-number" class="font-serif text-5xl text-transparent bg-clip-text bg-gradient-to-r from-gold to-rosegold-300 font-semibold">00</span>-->
+                     <!--   <p class="text-[10px] tracking-[0.25em] text-slate-400 uppercase mt-1">Días para nuestra boda</p>-->
+                    </div>
+
+                    <h3 class="font-serif text-lg tracking-wider text-rosegold-300 font-light mb-3">Cuenta Regresiva</h3>
+
+                    <!-- Countdown Display Grid -->
+                    <div id="countdown-container" class="grid grid-cols-4 gap-3 text-center">
+                        <div class="bg-navy-dark/60 rounded-xl p-3 border border-rosegold-300/10 shadow-inner">
+                            <span id="days" class="block font-serif text-2xl text-white font-semibold">00</span>
+                            <span class="text-[8px] tracking-widest text-rosegold-300/70 uppercase font-light">Días</span>
+                        </div>
+                        <div class="bg-navy-dark/60 rounded-xl p-3 border border-rosegold-300/10 shadow-inner">
+                            <span id="hours" class="block font-serif text-2xl text-white font-semibold">00</span>
+                            <span class="text-[8px] tracking-widest text-rosegold-300/70 uppercase font-light">Horas</span>
+                        </div>
+                        <div class="bg-navy-dark/60 rounded-xl p-3 border border-rosegold-300/10 shadow-inner">
+                            <span id="minutes" class="block font-serif text-2xl text-white font-semibold">00</span>
+                            <span class="text-[8px] tracking-widest text-rosegold-300/70 uppercase font-light">Mins</span>
+                        </div>
+                        <div class="bg-navy-dark/60 rounded-xl p-3 border border-rosegold-300/10 shadow-inner">
+                            <span id="seconds" class="block font-serif text-2xl text-rose-300/90 font-semibold">00</span>
+                            <span class="text-[8px] tracking-widest text-rosegold-300/70 uppercase font-light">Segs</span>
+                        </div>
+                    </div>
+                    <p class="text-[10px] tracking-widest text-slate-400 uppercase mt-4 mb-5">Para nuestro gran día</p>
+
+                    <!-- Agregar al calendario del celular -->
+                    <a id="add-to-calendar" href="#" download="Boda-Bryan-y-Katherin.ics"
+                       class="btn-gold-border text-navy-dark text-xs font-semibold tracking-widest uppercase py-3 px-6 rounded-full flex items-center justify-center gap-2 shadow-lg shadow-rosegold-400/20 mx-auto w-full max-w-[240px]">
+                        <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+                        Agregar al Calendario
+                    </a>
+                </div>
+            </section>
+
+  
+                
+  <!-- SECTION 5: codigo de vestimenta Colores -->
+                <section class="w-full flex flex-col justify-center px-6 py-12 relative">
+                <div class="text-center mb-10 reveal-element">
+                    <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Dress Code</span>
+                    <h2 class="font-serif text-3xl text-white mt-1">Código de Vestimenta</h2>
+                    <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 relative overflow-hidden reveal-element text-center">
+                    <p class="font-serif text-lg text-white mb-6 font-light">Colores recomendados</p>
+                    
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #070707;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #b35e49;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #996c31;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #aa4425;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #800000;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #7ea136;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #d1af15;"></div> 
+
+                    </div>
+
+                    <div class="border-t border-rosegold-300/20 pt-6 mt-2">
+                        <p class="text-[10px] tracking-widest text-rosegold-300 uppercase font-medium mb-2">Importante</p>
+                        <p class="text-sm font-light text-slate-300">Nos reservamos el <b>blanco</b> y el <b>azul</b> exclusivamente para los novios.</p>
+                    </div>
+                </div>
+            </section>
+
+
+  <!-- SECTION 6: SOLO ADULTOS-->
+
+             <section class="w-full flex flex-col justify-center px-6 py-4 relative mb-8">
+                <div class="glass-card rounded-3xl p-6 text-center reveal-element border border-rosegold-300/20">
+                    <div class="flex justify-center mb-4">
+                        <div class="p-3 rounded-full bg-rosegold-300/5 text-rosegold-300">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+                    <h3 class="font-serif text-2xl text-white tracking-wide font-light mb-2">Solo Adultos</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed px-2">
+                        Aunque amamos a los más pequeños, <br> este evento será exclusivo para adultos.
+                    </p>
+                </div>
+            </section>
+
+<!-- Elegant Card for Details / Souvenir (Lluvia de sobres) icono regalo -->
+ 
+                <div class="glass-card rounded-3xl p-6 mt-6 relative space-y-4 reveal-element">
+                    <div class="flex items-center gap-4">
+                        <div class="p-5 rounded-full bg-gold/5 border border-gold/20 text-gold">
+                            <i data-lucide="gift" class="w-10 h-10"></i>
+                        </div>
+                        <div>
+                         <!--    <h4 class="font-serif text-lg text-white font-light">LS</h4>-->
+                            <p class="text-sm text-slate-400 mt-0.5">Tu presencia es nuestro mayor regalo, poder compartir este dia contigo.</p>
+                        </div>
+                    </div>
+                </div>
+          
+
+
+        <!-- SECTION 5: RSVP (CONFIRMACIÓN) -->
+            <section class="min-h-screen w-full flex flex-col justify-center px-6 py-16 relative">
+               <div class="absolute inset-0 bg-[url('assets/foto2.jpg')] bg-cover bg-fixed bg-center opacity-[0.10] pointer-events-none z-0"></div>
+                <div class="text-center mb-8 reveal-element"> 
+                    <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Confirmación de Asistencia</span>
+                    <h2 class="font-serif text-3xl text-white mt-1">Acompáñanos</h2>
+                    <p class="text-base text-slate-400 mt-2">Agradecemos confirmar tu asistencia antes del <br> 15 de Octubre de 2026</p>
+                    <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-4"></div>
+                </div>
+
+                <!-- RSVP Form Card -->
+                <div class="glass-card rounded-3xl p-8 relative overflow-hidden reveal-element">
+                    
+                    <!-- Mensaje de error si no hay código en la URL -->
+                    <div id="invalid-code-msg" class="hidden text-center space-y-3 py-6">
+                        <i data-lucide="alert-circle" class="w-12 h-12 text-rosegold-300/60 mx-auto"></i>
+                        <h3 class="font-serif text-xl text-white">Invitación Personalizada</h3>
+                        <p class="text-xs text-slate-400">Por favor, utiliza el enlace exacto que te enviamos para poder confirmar tu asistencia.</p>
+                    </div>
+
+                    <form id="rsvp-form" class="space-y-6 hidden">
+                        
+                        <!-- Saludo personalizado -->
+                        <div class="text-center pb-2 border-b border-rosegold-300/20">
+                            <p class="text-[10px] tracking-widest text-rosegold-300 uppercase font-medium">Familia / Invitado</p>
+                            <h3 id="family-greeting-name" class="font-serif text-xl text-white mt-1">...</h3>
+                        </div>
+
+                      <!-- Radio Attendance Cards -->
+                        <div class="space-y-2">
+                            <span class="block text-[10px] tracking-widest text-rosegold-300 uppercase font-medium mb-3">¿Asistirán al evento?</span>
+                            <div class="grid grid-cols-2 gap-3">
+                                <label class="relative cursor-pointer">
+                                    <!-- Sin "checked" por defecto -->
+                                    <input type="radio" name="attendance" value="SI" class="sr-only peer">
+                                    <div class="peer-checked:bg-rosegold-500/20 peer-checked:border-rosegold-300 border border-slate-700/50 rounded-xl p-3 text-center transition-all duration-300 hover:bg-slate-800/40 bg-navy-dark/50">
+                                        <span class="block text-xs font-medium text-slate-300 peer-checked:text-white">Sí, Asistiremos</span>
+                                    </div>
+                                </label>
+                                <label class="relative cursor-pointer">
+                                    <!-- Sin "checked" por defecto -->
+                                    <input type="radio" name="attendance" value="NO" class="sr-only peer">
+                                    <div class="peer-checked:bg-rosegold-500/20 peer-checked:border-rosegold-300 border border-slate-700/50 rounded-xl p-3 text-center transition-all duration-300 hover:bg-slate-800/40 bg-navy-dark/50">
+                                        <span class="block text-xs font-medium text-slate-300 peer-checked:text-white">No podremos</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Lista de Miembros (Oculta por defecto, se revela con animación) -->
+                        <div id="family-members-container" class="space-y-3 transition-all duration-300 opacity-0 -translate-y-4 hidden pointer-events-none">
+                            <span class="block text-[10px] tracking-widest text-rosegold-300 uppercase font-medium">Confirma quiénes asisten:</span>
+                            <div id="members-list" class="space-y-2">
+                                <!-- Los toggles se insertarán aquí desde JavaScript -->
+                            </div>
+                        </div>
+
+                        <!-- Transporte (Oculto por ahora, puedes quitar el 'hidden' luego) -->
+                        <div id="transport-container" class="hidden flex items-center justify-between p-3 rounded-xl bg-navy-dark/50 border border-rosegold-300/10">
+                            <div>
+                                <span class="block text-[10px] tracking-widest text-rosegold-300 uppercase font-medium">Transporte</span>
+                                <span class="text-[10px] text-slate-400">¿Cuentan con transporte propio?</span>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="transport-toggle" class="sr-only peer" checked>
+                                <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-rosegold-400"></div>
+                            </label>
+                        </div>
+
+                        <!-- Special Message Area -->
+                        <div class="space-y-2">
+                            <label for="guest-message" class="block text-[10px] tracking-widest text-rosegold-300 uppercase font-medium">Mensaje Especial</label>
+                            <textarea id="guest-message" rows="3" placeholder="Déjanos unas lindas palabras..."
+                                class="w-full bg-navy-dark/80 border border-rosegold-300/20 text-slate-200 rounded-xl px-4 py-3 text-sm transition-all placeholder-slate-500 font-light resize-none"></textarea>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-2">
+                            <button type="submit" id="submit-btn" 
+                                class="btn-gold-border text-navy-dark text-xs font-bold tracking-widest uppercase py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-rosegold-400/20 w-full transition-transform">
+                                <i data-lucide="send" class="w-4 h-4"></i>
+                                Confirmar Asistencia
+                            </button>
+                        </div>
+                    </form>
+
+                    <!-- Success State (hidden initially) -->
+                    <!-- ... Mantén tu #success-screen igual que como lo tenías ... -->
+                     <div id="success-screen" class="hidden flex-col bg-navy-medium flex flex-col justify-center items-center p-8 text-center space-y-6 z-20">
+                        <div id="success-icon-wrap" class="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 animate-scale-up">
+                            <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+                        </div>
+                        <div class="space-y-2">
+                            <h3 id="success-title" class="font-serif text-2xl text-white">¡Confirmación Recibida!</h3>
+                            <p id="success-message" class="text-xs text-slate-300 leading-relaxed max-w-xs">Tu respuesta ha sido registrada exitosamente. Gracias por formar parte de este día tan especial para nosotros.</p>
+                        </div>
+                        <p class="font-serif text-rosegold-300 italic text-lg">- Bryan & Katherin -</p>
+                        <button id="edit-rsvp-btn" type="button" class="text-[10px] tracking-widest text-rosegold-300/60 uppercase underline underline-offset-4 mt-2">¿Deseas actualizar tu respuesta?</button>
+                    </div>
+                </div>
+            </section>
+
+
+
+            <!-- FOOTER MONOGRAM -->
+            <footer class="py-16 text-center border-t border-slate-900 bg-navy-dark/50">
+                <p class="font-serif text-2xl text-rosegold-300">B & K</p>
+                <p class="text-[9px] tracking-[0.3em] text-slate-500 uppercase mt-2">14 de Noviembre de 2026</p>
+                <p class="text-[8px] text-slate-600 uppercase mt-8 tracking-widest">Creado con amor por el novio de la boda</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
