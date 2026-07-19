@@ -7,6 +7,204 @@
 // Inicializa los iconos de Lucide para que se dibujen en la página.
 lucide.createIcons();
 
+  // --- Lógica del Modo Día/Noche ---
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const htmlElement = document.documentElement;
+
+        themeToggleBtn.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            if (navigator.vibrate) navigator.vibrate(50); // Pequeña vibración al cambiar
+        });
+
+                // Resto de Scripts
+        function lockScroll() {
+            document.documentElement.classList.add('overflow-hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+        function unlockScroll() {
+            document.documentElement.classList.remove('overflow-hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            lockScroll(); 
+            
+            const preloader = document.getElementById('preloader');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            let progress = 0;
+            
+            const interval = setInterval(() => {
+                progress += Math.floor(Math.random() * 12) + 6;
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                    progressBar.style.width = '100%';
+                    progressText.innerText = 'Invitación lista • 100%';
+                    
+                    setTimeout(() => {
+                        preloader.classList.add('opacity-0');
+                        setTimeout(() => preloader.remove(), 700);
+                    }, 600);
+                } else {
+                    progressBar.style.width = `${progress}%`;
+                    progressText.innerText = `Preparando invitación... ${progress}%`;
+                }
+            }, 120);
+        });
+
+        const canvas = document.getElementById('ambient-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        let sparks = [];
+        let rsvpSparks = [];
+        let petals = [];
+        let showPetals = false;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class AmbientSparkle {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * canvas.height;
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 10;
+                this.size = Math.random() * 1.5 + 0.4;
+                this.speedY = -(Math.random() * 0.4 + 0.1);
+                this.speedX = Math.random() * 0.3 - 0.15;
+                this.opacity = Math.random() * 0.6 + 0.1;
+                this.oscillationSpeed = Math.random() * 0.02 + 0.005;
+                this.oscillationDistance = Math.random() * 0.5;
+                this.angle = 0;
+            }
+            update() {
+                this.y += this.speedY;
+                this.angle += this.oscillationSpeed;
+                this.x += this.speedX + Math.sin(this.angle) * this.oscillationDistance;
+                if (this.y < -10 || this.x < -10 || this.x > canvas.width + 10) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(212, 175, 55, ${this.opacity})`;
+                ctx.shadowColor = '#D4AF37';
+                ctx.shadowBlur = 4;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+        }
+
+        class CelebrationSpark {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = Math.random() * 3.5 + 1.2;
+                this.speedX = (Math.random() * 8 - 4);
+                this.speedY = (Math.random() * -9 - 3);
+                this.gravity = 0.18;
+                this.color = ['#D4AF37', '#E2B2A6', '#C07262', '#AA820A'][Math.floor(Math.random() * 4)];
+                this.opacity = 1;
+                this.decay = Math.random() * 0.015 + 0.008;
+            }
+            update() {
+                this.speedY += this.gravity;
+                this.x += this.speedX;
+                this.y += this.speedY;
+                this.opacity -= this.decay;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.globalAlpha = Math.max(this.opacity, 0);
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 6;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
+        class RosePetal {
+            constructor() {
+                this.reset();
+                this.y = Math.random() * -canvas.height;
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 10 + 6;
+                this.speedY = Math.random() * 1.2 + 0.6;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.rotation = Math.random() * 360;
+                this.rotationSpeed = Math.random() * 1.5 - 0.75;
+                this.swingAngle = Math.random() * 360;
+                this.swingSpeed = Math.random() * 0.02 + 0.01;
+            }
+            update() {
+                this.y += this.speedY;
+                this.swingAngle += this.swingSpeed;
+                this.x += this.speedX + Math.sin(this.swingAngle) * 0.6;
+                this.rotation += this.rotationSpeed;
+                if (this.y > canvas.height + 20) {
+                    this.reset();
+                }
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate((this.rotation * Math.PI) / 180);
+                ctx.beginPath();
+                ctx.ellipse(0, 0, this.size, this.size / 1.5, 0, 0, Math.PI * 2);
+                ctx.fillStyle = '#C07262';
+                ctx.shadowColor = '#000';
+                ctx.shadowBlur = 2;
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < 35; i++) { sparks.push(new AmbientSparkle()); }
+
+        function triggerRsvpSparks() {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height * 0.7;
+            for (let i = 0; i < 90; i++) {
+                rsvpSparks.push(new CelebrationSpark(centerX, centerY));
+            }
+        }
+
+        function triggerRosePetals() {
+            if (showPetals) return;
+            showPetals = true;
+            for (let i = 0; i < 25; i++) {
+                petals.push(new RosePetal());
+            }
+        }
+
+        function runParticleLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            sparks.forEach(s => { s.update(); s.draw(); });
+            rsvpSparks.forEach((s, index) => {
+                s.update(); s.draw();
+                if (s.opacity <= 0) rsvpSparks.splice(index, 1);
+            });
+            if (showPetals) {
+                petals.forEach(p => { p.update(); p.draw(); });
+            }
+            requestAnimationFrame(runParticleLoop);
+        }
+        runParticleLoop();
 /* -------------------------------------------------------------
    1. HERO FADE & SCALE ON SCROLL (Scroll-driven Animation)
 ------------------------------------------------------------- */
