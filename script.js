@@ -665,12 +665,11 @@ const transportToggle = document.getElementById('transport-toggle');
 const RSVP_STORAGE_KEY = 'bk_wedding_rsvp_2026';
 
 // 3. INICIALIZACIÓN DE LA INTERFAZ
-// 3. INICIALIZACIÓN DE LA INTERFAZ
 if (!familyMembers) {
     invalidMsg.classList.remove('hidden');
 } else {
     rsvpForm.classList.remove('hidden');
-    familyGreeting.textContent = "Familia " + familyMembers[0].split(" ")[0]; 
+    //familyGreeting.textContent = "Familia " + familyMembers[0].split(" ")[0]; 
     
     membersList.innerHTML = '';
     familyMembers.forEach((member, index) => {
