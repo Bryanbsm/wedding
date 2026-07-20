@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark scroll-smooth overflow-hidden">
+<html lang="es" class="scroll-smooth overflow-hidden">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -38,11 +38,9 @@
     
     <script>
         tailwind.config = {
-            darkMode: 'class', // Añade esta línea
             theme: {
                 extend: {
                     colors: {
-                        cream: '#FDFBF7', // Color fondo modo claro
                         navy: {
                             dark: '#070B19',
                             medium: '#0D132B',
@@ -72,33 +70,32 @@
     </script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="flex justify-center items-center min-h-screen text-slate-800 dark:text-slate-100 font-sans antialiased overflow-x-hidden overflow-hidden selection:bg-rosegold-300 selection:text-navy-dark transition-colors duration-500">
+<body class="flex justify-center items-center min-h-screen text-slate-100 font-sans antialiased overflow-x-hidden overflow-hidden selection:bg-rosegold-300 selection:text-navy-dark">
 
 
- <!-- BOTÓN MODO DÍA / NOCHE -->
-    <button id="theme-toggle" class="fixed top-5 right-5 z-[60] w-10 h-10 rounded-full glass-card border-rosegold-300/40 dark:border-rosegold-300/30 flex items-center justify-center text-rosegold-500 dark:text-rosegold-300 transition-all duration-300 hover:scale-110 active:scale-95 shadow-lg">
-        <i data-lucide="sun" class="w-5 h-5 absolute transition-transform duration-500 rotate-0 scale-100 dark:-rotate-90 dark:scale-0"></i>
-        <i data-lucide="moon" class="w-5 h-5 absolute transition-transform duration-500 rotate-90 scale-0 dark:rotate-0 dark:scale-100"></i>
-    </button>
 
-    <!-- PRELOADER -->
-    <div id="preloader" class="fixed inset-0 z-[100] bg-[#070B19] dark:bg-navy-dark flex flex-col items-center justify-center text-center px-6 transition-all duration-700 ease-out">
-        <div class="relative flex flex-col items-center gap-5">
-            <span class="font-serif text-3xl text-rosegold-200 tracking-[0.25em] animate-pulse">B & K</span>
-            <div class="w-48 h-[2px] bg-rosegold-300/20 dark:bg-rosegold-300/10 rounded-full overflow-hidden">
-                <div id="progress-bar" class="w-0 h-full bg-gradient-to-r from-gold to-rosegold-300 transition-all duration-300 ease-out"></div>
+
+    <!-- ============================================================
+         PRELOADER: se muestra mientras se precarga la música y
+         los recursos esenciales, antes de revelar el sobre.
+    ============================================================ -->
+    <div id="preloader" class="fixed inset-0 max-w-[450px] mx-auto z-[60] flex flex-col items-center justify-center bg-navy-dark px-6 text-center select-none">
+        <div class="absolute inset-0 pointer-events-none overflow-hidden">
+            <div class="absolute top-[20%] -left-16 w-[220px] h-[220px] rounded-full bg-rosegold-500/10 blur-[100px] animate-float"></div>
+            <div class="absolute bottom-[20%] -right-16 w-[220px] h-[220px] rounded-full bg-gold/10 blur-[100px] animate-float" style="animation-delay:-4s;"></div>
+        </div>
+        <div class="relative z-10 flex flex-col items-center gap-6">
+            <div class="w-12 h-12 rounded-full border border-rosegold-300/30 flex items-center justify-center font-serif text-xl text-rosegold-300">
+                B&K
             </div>
-            <span id="progress-text" class="text-[9px] tracking-[0.3em] text-slate-300 uppercase">Preparando invitación... 0%</span>
+            <div id="preloader-ring" class="w-9 h-9 rounded-full border-2 border-rosegold-300/20 border-t-rosegold-300 animate-spin"></div>
+            <p id="preloader-text" class="text-[11px] tracking-[0.3em] text-rosegold-300/70 uppercase font-medium">Preparando tu invitación...</p>
         </div>
     </div>
 
-    <!-- CANVAS ANIMACIONES -->
-    <canvas id="ambient-canvas" class="fixed inset-0 pointer-events-none z-[5]"></canvas>
-
     <!-- Mobile Screen Wrapper (Restricting desktop view to elegant mobile preview) -->
-    <div class="relative w-full max-w-[450px] min-h-screen bg-transparent shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-x-hidden no-scrollbar flex flex-col justify-start">
+    <div id="app-wrapper" class="relative w-full max-w-[450px] min-h-screen bg-navy-dark shadow-[0_0_50px_rgba(0,0,0,0.8)] overflow-x-hidden no-scrollbar flex flex-col justify-start">
         
-
         <!-- ENVELOPE GATE: Pantalla inicial del sobre cerrado -->
         <div id="envelope-gate" class="fixed inset-0 max-w-[450px] mx-auto z-50 flex flex-col items-center justify-center bg-navy-dark px-6 text-center select-none">
             <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -651,6 +648,13 @@
                 <i data-lucide="moon" class="w-[18px] h-[18px] relative z-10"></i>
             </button>
 
+            <!-- Tamaño de letra: esquina inferior derecha (arriba del botón subir) -->
+            <button id="font-size-btn" type="button" aria-label="Aumentar tamaño de letra" title="Tamaño de letra"
+                class="fc-btn absolute right-4 bottom-24 pointer-events-auto">
+                <span class="fc-wave"></span>
+                <i data-lucide="search" class="w-[18px] h-[18px] relative z-10"></i>
+            </button>
+
             <!-- Volver arriba: esquina inferior derecha -->
             <button id="back-to-top-btn" type="button" aria-label="Volver arriba" title="Volver arriba"
                 class="fc-btn fc-scroll-hidden absolute right-4 bottom-6 pointer-events-auto">
@@ -658,8 +662,6 @@
                 <i data-lucide="arrow-up" class="w-[18px] h-[18px] relative z-10"></i>
             </button>
         </div>
-
-
     </div>
 
     <script src="script.js"></script>
