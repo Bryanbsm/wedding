@@ -1210,7 +1210,7 @@ if (backToTopBtn) {
    13. APARICIÓN ESCALONADA DE LOS BOTONES FLOTANTES   quite este fontSizeBtn
 ------------------------------------------------------------- */
 function revealFloatingControls() {
-    const order = [musicToggleBtn, themeToggleBtn, backToTopBtn];
+    const order = [musicToggleBtn, themeToggleBtn, backToTopBtn];   
     order.forEach((btn, index) => {
         if (!btn) return;
         setTimeout(() => btn.classList.add('is-visible'), index * 100);
