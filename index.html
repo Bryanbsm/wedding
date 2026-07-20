@@ -469,21 +469,147 @@
                 <div class="glass-card rounded-3xl p-8 relative overflow-hidden reveal-element text-center">
                     <p class="font-serif text-lg text-white mb-6 font-light">Colores recomendados</p>
                     
+                  
+                <!---    
                     <div class="flex flex-wrap justify-center gap-3 mb-8">
                         <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #070707;"></div> 
-                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #b35e49;"></div> 
                         <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #996c31;"></div> 
                         <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #aa4425;"></div> 
-                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #800000;"></div> 
                         <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #7ea136;"></div> 
                         <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #d1af15;"></div> 
+                    </div>
 
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #070707;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #222427;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #4A4A4A;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #535552;"></div> 
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #5C4033;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #A47149;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #B65E3C;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #C19A6B;"></div> 
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #355E3B;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #556B2F;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #708238;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #6e8626;"></div> 
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #6D213C;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #9e2c54;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #4e334e;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #6E4B6E;"></div> 
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #342414;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #4B3621;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #744d1a;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #926f40;"></div> 
+                    </div>
+                -->
+                    <h3 class="text-center text-sm font-medium mb-4">
+                        Colores recomendados
+                    </h3>
+
+                    <div id="color-palette" class="flex justify-center gap-4 flex-wrap">
+
+                        <button class="color-main"
+                            data-group="negros"
+                            style="background:#070707">
+                        </button>
+
+                        <button class="color-main"
+                            data-group="tierras"
+                            style="background:#5C4033">
+                        </button>
+
+                        <button class="color-main"
+                            data-group="verdes"
+                            style="background:#355E3B">
+                        </button>
+
+                        <button class="color-main"
+                            data-group="vinos"
+                            style="background:#6D213C">
+                        </button>
+
+                        <button class="color-main"
+                            data-group="cafes"
+                            style="background:#342414">
+                        </button>
+
+                    </div>
+
+                    <div
+                    id="palette-details"
+                    class="mt-6 hidden transition-all duration-300">
                     </div>
 
                     <div class="border-t border-rosegold-300/20 pt-6 mt-2">
                         <p class="text-[10px] tracking-widest text-rosegold-300 uppercase font-medium mb-2">Importante</p>
                         <p class="text-sm font-light text-slate-300">Nos reservamos el <b>blanco, marfil. beige</b> los tonos <b>azules</b> exclusivamente para los novios.</p>
                     </div>
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #FFFFFF;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #F5F5DC;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #2D5678;"></div> 
+                        <div class="w-8 h-8 rounded-full border border-white/20 shadow-md" style="background-color: #3C6E9A;"></div> 
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-4">
+
+    <!-- Blanco -->
+ <div class="group flex flex-col items-center">
+    
+    <!-- El círculo ahora es flex y centra automáticamente su contenido -->
+    <div class="flex items-center justify-center w-6 h-6 rounded-full border border-gray-300 shadow"
+         style="background:#FFFFFF;">
+        
+        <!-- La X se centra sola por el flex del padre -->
+        <svg class="w-6 h-6 text-red-600 drop-shadow"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="3"
+             stroke-linecap="round">
+            <path d="M6 6L18 18M18 6L6 18"/>
+        </svg>
+    </div>
+
+    <!-- El texto se mantiene debajo -->
+    <p class="mt-2 text-xs text-center">Blancos</p>
+    
+</div>
+    <!-- azukl -->
+
+<div class="group flex flex-col items-center">
+    
+    <!-- El círculo ahora es flex y centra automáticamente su contenido -->
+    <div class="flex items-center justify-center w-6 h-6 rounded-full border border-gray-300 shadow"
+         style="background:#2D5678;">
+        
+        <!-- La X se centra sola por el flex del padre -->
+        <svg class="w-6 h-6 text-red-600 drop-shadow"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="3"
+             stroke-linecap="round">
+            <path d="M6 6L18 18M18 6L6 18"/>
+        </svg>
+    </div>
+
+    <!-- El texto se mantiene debajo -->
+    <p class="mt-2 text-xs text-center">Azules</p>
+    
+</div>
+
                 </div>
             </section>
 
@@ -544,8 +670,9 @@
                         
                         <!-- Saludo personalizado -->
                         <div class="text-center pb-2 border-b border-rosegold-300/20">
-                            <p class="text-[10px] tracking-widest text-rosegold-300 uppercase font-medium">Familia / Invitado</p>
-                            <h3 id="family-greeting-name" class="font-serif text-xl text-white mt-1">...</h3>
+                            <p class="text-[10px] tracking-widest text-rosegold-300 uppercase font-medium">Confirmación de Asistencia</p>
+                            <h3 id="family-greeting-name" class="font-serif text-xl text-white mt-1">Agradecemos confirmar tu asistencia antes del
+15 de Octubre de 2026</h3>
                         </div>
 
                       <!-- Radio Attendance Cards -->
@@ -664,6 +791,7 @@
 
     </div>
 
+    <script src="rsvp.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

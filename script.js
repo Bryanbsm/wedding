@@ -381,6 +381,116 @@ function showDressCodeAlert() {
     });
 }
 
+
+const palettes = {
+
+    negros: {
+        titulo: "Negros y Grises",
+        colores: [
+            ["Negro", "#070707"],
+            ["Grafito", "#2a2b2d"],
+            ["Gris Carbón", "#383434"],
+            ["Gris Pizarra", "#535552"]
+        ]
+    },
+
+    tierras: {
+        titulo: "Tonos Chocolate",
+        colores: [
+            ["Chocolate", "#5C4033"],
+            ["Canela", "#A47149"],
+            ["Terracota", "#B65E3C"],
+            ["Camel", "#C19A6B"]
+        ]
+    },
+
+    verdes: {
+        titulo: "Tonos Verdes",
+        colores: [
+            ["Bosque", "#355E3B"],
+            ["Musgo", "#556B2F"],
+            ["Oliva", "#708238"],
+            ["Oliva Claro", "#6e8626"]
+        ]
+    },
+
+    vinos: {
+        titulo: "Tonos Vino",
+        colores: [
+            ["Borgoña", "#6D213C"],
+            ["Frambuesa", "#9e2c54"],
+            ["Ciruela Oscura", "#4e334e"],
+            ["Ciruela", "#6E4B6E"]
+        ]
+    },
+
+    cafes: {
+        titulo: "Cafés",
+        colores: [
+            ["Ébano", "#342414"],
+            ["Café Oscuro", "#4B3621"],
+            ["Café", "#744d1a"],
+            ["Avellana", "#926f40"]
+        ]
+    }
+
+};
+
+
+const botones = document.querySelectorAll(".color-main");
+const panel = document.getElementById("palette-details");
+
+let abierto = null;
+
+botones.forEach(btn=>{
+
+    btn.addEventListener("click",()=>{
+
+        const grupo = btn.dataset.group;
+
+        if(abierto===grupo){
+
+            panel.classList.add("hidden");
+            abierto=null;
+            return;
+        }
+
+        abierto=grupo;
+
+        const datos=palettes[grupo];
+
+        panel.innerHTML=`
+
+            <h4 class="text-center text-lg font-semibold mb-4">
+                ${datos.titulo}
+            </h4>
+
+            <div class="grid grid-cols-2 gap-3">
+
+                ${datos.colores.map(color=>`
+
+                    <div class="flex items-center gap-3">
+
+                        <span
+                        class="w-6 h-6 rounded-full border"
+                        style="background:${color[1]}"></span>
+
+                        <span>${color[0]}</span>
+
+                    </div>
+
+                `).join("")}
+
+            </div>
+
+        `;
+
+        panel.classList.remove("hidden");
+
+    });
+
+});
+
 /* -------------------------------------------------------------
    4.1 CALENDARIO INTERACTIVO (Noviembre 2026, con el 14 resaltado)
 ------------------------------------------------------------- */
@@ -450,198 +560,8 @@ function showDressCodeAlert() {
 /* -------------------------------------------------------------
    5. RSVP FORM HANDLING (URLs personalizadas, Toggles y Sheets)
 ------------------------------------------------------------- */
-// 1. BASE DE DATOS DE FAMILIAS 
-const familiasData = {
-    "3201B": [
-        "JACKELINE MEJIA MIRANDA",
-        "BENITO GERMAN MARTINEZ"
-    ],
-    "1": [
-        "YISET MARTINEZ",
-        "ANGEL MANUEL",
-        "VICTOR QUICENO"
-    ],
-    "6302B": [
-        "YISET MARTINEZ",
-        "ANGEL MANUEL",
-        "VICTOR QUICENO"
-    ],
-    "9203B": [
-        "MARIA MIRANDA",
-        "PEDRO MEJIA"
-    ],
-    "12504B": [
-        "BLANCA MEJIA",
-        "DENIS",
-        "BREINER",
-        "HIJO DENIS",
-        "ISABELLA"
-    ],
-    "15305B": [
-        "FRANCIA MEJIA",
-        "MAURICIO IBARRA",
-        "SARAY VALENTINA"
-    ],
-    "18106B": [
-        "LENIS MEJIA"
-    ],
-    "21107B": [
-        "ELIAN BOTINA MEJIA"
-    ],
-    "24508B": [
-        "XIOMARA BOTINA",
-        "STEVEN MOLINA",
-        "SALOME MOLINA",
-        "SARA MOLINA",
-        "SOFIA MOLINA"
-    ],
-    "27409B": [
-        "JHONATAN MEJIA",
-        "ESTEFANIA",
-        "HIJO",
-        "MARIA JOSE"
-    ],
-    "302010B": [
-        "MARIA LIGIA ACOSTA",
-        "FLORO MARTINEZ"
-    ],
-    "334011B": [
-        "MARCELA MARTINEZ",
-        "ANDRES JURADO",
-        "JULIAN JURADO",
-        "HILARY"
-    ],
-    "364012B": [
-        "LEIDY MARTINEZ",
-        "PABLO SOTELO",
-        "ALEJANDRO SOTELO",
-        "LAURA SOTELO"
-    ],
-    "395013B": [
-        "JORGE MARTINEZ",
-        "LINA VILLA",
-        "SOFIA MARTINEZ",
-        "SARA MARTINEZ",
-        "BEBE"
-    ],
-    "421014B": [
-        "ANDRES MARTINEZ"
-    ],
-    "452015B": [
-        "JOHAN OROZCO",
-        "ACOMPAÑANTE"
-    ],
-    "482016B": [
-        "ROCIO DIAZ",
-        "ESPOSO"
-    ],
-    "512017B": [
-        "MONICA SANCHEZ",
-        "ESPOSO"
-    ],
-    "543018K": [
-        "GLORIA ARCILA",
-        "FERNANDO MORALES",
-        "EMMANUEL"
-    ],
-    "572019K": [
-        "NANDO",
-        "NAYENCI"
-    ],
-    "602020K": [
-        "VALENTINA ARCILA",
-        "JAVIER"
-    ],
-    "631021K": [
-        "RICARDO ARCILA BALLESTEROS"
-    ],
-    "661022K": [
-        "JUAN ARCILA"
-    ],
-    "691023K": [
-        "PABLO ARCILA"
-    ],
-    "721024K": [
-        "RICARDO ARCILA NOREÑA"
-    ],
-    "751025K": [
-        "DAIRA MORA"
-    ],
-    "781026K": [
-        "SAULO DE JESUS ARCILA NOREÑA"
-    ],
-    "814027K": [
-        "FELIX ARCILA NOREÑA",
-        "DEISY VELASQUEZ",
-        "LEIDY",
-        "MATHIAS"
-    ],
-    "843028K": [
-        "SANDRA MILENA MORALES",
-        "ANA MARIA BERMUDEZ M",
-        "JUAN DAVID BERMUDEZ M"
-    ],
-    "871029K": [
-        "GABRIEL BERMUDEZ"
-    ],
-    "902030K": [
-        "CARMEN NOREÑA",
-        "RICARDO ARCILA"
-    ],
-    "932031K": [
-        "DANIEL MORALES A",
-        "MARIA LUZ ACEVEDO"
-    ],
-    "961032K": [
-        "VALENTINA DUQUE"
-    ],
-    "992033K": [
-        "CAMILA ALVAREZ",
-        "ESPOSO"
-    ],
-    "1023034K": [
-        "SUSAN",
-        "SANTIAGO",
-        "AITANA"
-    ],
-    "1052035K": [
-        "TATIANA",
-        "VALENTIN"
-    ],
-    "1083036K": [
-        "SANDRA GUARIN",
-        "ALVARO",
-        "MAILY"
-    ],
-    "1112037K": [
-        "NAYIBI SALAZAR",
-        "ESPOSO"
-    ],
-    "1142038K": [
-        "YAZMIN BLANDON N",
-        "ESPOSO"
-    ],
-    "1172039K": [
-        "NORA",
-        "KAREN"
-    ],
-    "1203040K": [
-        "JOHANA",
-        "SOFIA",
-        "ESPOSO"
-    ],
-    "1232041K": [
-        "CARLOS ZAPATA",
-        "ESPOSA"
-    ],
-    "1261042K": [
-        "ESTEBAN"
-    ],
-    "1292043": [
-        "BRYAN",
-        "KATHERIN"
-    ]
-};
+// 1. BASE DE DATOS DE FAMILIAS
+const familiasData = window.familiasData || {};
 
 // 2. EXTRAER CÓDIGO DE LA URL (?guest=CODIGO)
 const urlParams = new URLSearchParams(window.location.search);
@@ -670,7 +590,7 @@ if (!familyMembers) {
 } else {
     rsvpForm.classList.remove('hidden');
     //familyGreeting.textContent = "Familia " + familyMembers[0].split(" ")[0]; 
-    
+    //texto mienbros de la familia
     membersList.innerHTML = '';
     familyMembers.forEach((member, index) => {
         // Nuevo diseño de Switch con SÍ/NO adentro (apagado por defecto)

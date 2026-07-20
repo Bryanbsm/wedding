@@ -361,6 +361,29 @@ input:focus, textarea:focus {
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
+.color-main{
+
+    width:44px;
+    height:44px;
+
+    border-radius:50%;
+
+    border:2px solid rgba(255,255,255,.15);
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.color-main:hover{
+
+    transform:scale(1.15);
+
+    box-shadow:0 0 18px rgba(255,255,255,.25);
+
+}
+
 /* Respeta a quienes prefieren menos movimiento en pantalla */
 @media (prefers-reduced-motion: reduce) {
     #envelope-scene { animation: none !important; }
