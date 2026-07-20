@@ -761,17 +761,30 @@
         </div>
 
         <!-- ============================================================
-             CONTROLES FLOTANTES (música, tema, tamaño de letra, subir)
+             CONTROLES FLOTANTES (música, tema, subir)
              El mp3 no se carga aquí: lo inyecta script.js durante el
              preloader, apenas empieza el proceso de precarga.
         ============================================================ -->
-        <div id="floating-controls" class="fixed inset-0 max-w-[450px] mx-auto z-40 pointer-events-none">
-            <!-- Música: esquina inferior izquierda -->
+       <!--  <div id="floating-controls" class="fixed inset-0 max-w-[450px] mx-auto z-40 pointer-events-none">
             <button id="music-toggle-btn" type="button" aria-label="Silenciar música" title="Silenciar música"
                 class="fc-btn absolute left-4 bottom-6 pointer-events-auto">
                 <span class="fc-wave"></span>
                 <i data-lucide="volume-2" class="w-[18px] h-[18px] relative z-10"></i>
-            </button>
+            </button>  -->
+
+            <div id="floating-controls" class="fixed inset-0 max-w-[450px] mx-auto z-40 pointer-events-none">
+                <!-- Música: esquina inferior izquierda -->
+                <button id="music-toggle-btn" type="button" aria-label="Silenciar música" title="Silenciar música"
+                    class="fc-btn absolute left-4 bottom-6 pointer-events-auto flex items-center justify-center">
+                    
+                    <!-- Contenedor invisible para las notas que irán saliendo -->
+                    <div id="music-notes-container" class="absolute inset-0 pointer-events-none z-0"></div>
+                    
+                    <!-- Imagen del vinilo (asegúrate de que la ruta sea correcta) -->
+                    <img src="assets/vinilo.png" alt="Música" id="vinyl-icon" class="w-[40px] h-[40px] rounded-full relative z-10 transition-transform">
+                    
+                </button>
+            <!-- ... resto de tus botones ... -->
 
             <!-- Tema día/noche: esquina superior derecha -->
             <button id="theme-toggle-btn" type="button" aria-label="Cambiar ambiente" title="Cambiar ambiente"

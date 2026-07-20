@@ -1047,6 +1047,64 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
+/* -------------------------------------------------------------
+   Lógica de Notas Flotantes y UI del Botón
+------------------------------------------------------------- */
+let notesIntervalId = null;
+
+function createFloatingNote() {
+    const container = document.getElementById('music-notes-container');
+    if (!container) return;
+
+    // Crear el elemento de la nota
+    const note = document.createElement('span');
+    
+    // Símbolos musicales aleatorios
+    const notesSymbols = ['♪', '♫', '♬'];
+    note.innerText = notesSymbols[Math.floor(Math.random() * notesSymbols.length)];
+    note.className = 'music-note-anim';
+    
+    // Variar ligeramente la posición horizontal de inicio
+    const leftOffset = Math.random() * 20 - 10; // Un valor entre -10px y 10px
+    note.style.left = `calc(50% + ${leftOffset}px)`;
+    note.style.bottom = '10px';
+
+    container.appendChild(note);
+
+    // Eliminar la nota del DOM después de 2 segundos (cuando termina su animación CSS)
+    setTimeout(() => {
+        note.remove();
+    }, 2000);
+}
+
+function updateMusicButtonUI(isAudible) {
+    if (!musicToggleBtn) return;
+    
+    const vinyl = document.getElementById('vinyl-icon');
+    
+    if (isAudible) {
+        // Estilos para cuando ESTÁ sonando
+        musicToggleBtn.classList.add('is-playing');
+        if (vinyl) vinyl.classList.add('vinyl-spin');
+        
+        // Iniciar el creador de notas si no está activo ya
+        if (!notesIntervalId) {
+            notesIntervalId = setInterval(createFloatingNote, 800); // Genera una nota cada 800ms
+        }
+    } else {
+        // Estilos para cuando NO está sonando (silenciado)
+        musicToggleBtn.classList.remove('is-playing');
+        if (vinyl) vinyl.classList.remove('vinyl-spin');
+        
+        // Detener la creación de notas
+        if (notesIntervalId) {
+            clearInterval(notesIntervalId);
+            notesIntervalId = null;
+        }
+    }
+    
+    musicToggleBtn.setAttribute('aria-label', isAudible ? 'Silenciar música' : 'Activar música');
+}
 
 /* -------------------------------------------------------------
    9. TAMAÑO DE LETRA (dos posiciones: normal / grande)

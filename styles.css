@@ -427,3 +427,43 @@ input:focus, textarea:focus {
 .member-toggle:checked + .switch-track .switch-si{
     display:block;
 }
+
+/* Rotación continua del vinilo */
+@keyframes spinVinyl {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Clase que asignaremos por JS cuando suene la música */
+.vinyl-spin {
+    animation: spinVinyl 3s linear infinite;
+}
+
+/* Animación para que las notas floten y desaparezcan */
+@keyframes floatNote {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) scale(0.5);
+    }
+    20% {
+        opacity: 1;
+        transform: translate(-10px, -15px) scale(1.1); /* Sube y se hace más grande */
+    }
+    80% {
+        opacity: 0.7;
+    }
+    100% {
+        opacity: 0;
+        transform: translate(15px, -45px) scale(0.8) rotate(15deg); /* Desaparece arriba a la derecha */
+    }
+}
+
+/* Estilo base de cada nota generada */
+.music-note-anim {
+    position: absolute;
+    font-size: 1.2rem;
+    color: #4B5563; /* Color gris oscuro (ajústalo según tu paleta) */
+    animation: floatNote 2s ease-out forwards;
+    pointer-events: none;
+    z-index: 0;
+}
