@@ -1,4 +1,4 @@
-// Base de datos de familias para el RSVP
+// Base de datos de familias para el RSVP    index.html?guest=3201B
 window.familiasData = {
     "3201B": [
         "JACQUELINE MEJIA MIRANDA",

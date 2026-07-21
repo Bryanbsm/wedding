@@ -395,12 +395,12 @@ const palettes = {
     },
 
     tierras: {
-        titulo: "Tonos Chocolate",
+        titulo: "Tonos Marron",
         colores: [
+            ["Ébano", "#342414"],
             ["Chocolate", "#5C4033"],
-            ["Canela", "#A47149"],
-            ["Terracota", "#B65E3C"],
-            ["Camel", "#C19A6B"]
+            ["Café Oscuro", "#4B3621"],
+            ["Café", "#744d1a"],
         ]
     },
 
@@ -421,16 +421,6 @@ const palettes = {
             ["Frambuesa", "#9e2c54"],
             ["Ciruela Oscura", "#4e334e"],
             ["Ciruela", "#6E4B6E"]
-        ]
-    },
-
-    cafes: {
-        titulo: "Cafés",
-        colores: [
-            ["Ébano", "#342414"],
-            ["Café Oscuro", "#4B3621"],
-            ["Café", "#744d1a"],
-            ["Avellana", "#926f40"]
         ]
     }
 
