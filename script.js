@@ -952,7 +952,10 @@ function updateMusicButtonUI(isAudible) {
 }
 
 function startBackgroundMusic() {
+    // NUEVO: Borramos la preferencia de silencio de cualquier sesión anterior
+    localStorage.removeItem(MUSIC_MUTE_KEY);
     if (musicHasStarted) return;
+    // Ahora esta condición siempre será falsa al iniciar, garantizando que suene
     if (isMusicMutedByUser()) {
         updateMusicButtonUI(false);
         return;
