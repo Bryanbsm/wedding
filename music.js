@@ -37,15 +37,17 @@ function hidePreloader() {
 /* -------------------------------------------------------------
    8. SISTEMA DE MÚSICA PREMIUM
 ------------------------------------------------------------- */
+// NUEVA VARIABLE GLOBAL PARA EL VOLUMEN INICIAL
+const INITIAL_VOLUME = 0.15; 
+
 const musicToggleBtn = document.getElementById('music-toggle-btn');
 const MUSIC_MUTE_KEY = 'bk_music_muted';
-const FIRST_PLAY_VOLUME = 0.4;
 const LOOP_VOLUME = 0.2;
 const HIDDEN_TAB_VOLUME = 0.1;
 
 let musicHasStarted = false;
 let musicIsLooping = false;
-let volumeBeforeHidden = FIRST_PLAY_VOLUME;
+let volumeBeforeHidden = INITIAL_VOLUME;
 let fadeIntervalId = null;
 let notesIntervalId = null;
 
@@ -76,19 +78,27 @@ function fadeVolume(targetVolume, durationMs) {
 function updateMusicButtonUI(isAudible) {
     if (!musicToggleBtn) return;
 
+    // 1. Actualizar el ícono de Lucide
     const icon = musicToggleBtn.querySelector('i');
     if (icon) {
         icon.setAttribute('data-lucide', isAudible ? 'volume-2' : 'volume-x');
         lucide.createIcons();
     }
 
+    // 2. Lógica del Vinilo (Pausa suave sin regresar al inicio)
     const vinyl = document.getElementById('vinyl-icon');
     musicToggleBtn.classList.toggle('is-playing', isAudible);
+    
     if (vinyl) {
-        if (isAudible) vinyl.classList.add('vinyl-spin');
-        else vinyl.classList.remove('vinyl-spin');
+        // Nos aseguramos de que la clase de animación siempre exista
+        if (!vinyl.classList.contains('vinyl-spin')) {
+            vinyl.classList.add('vinyl-spin');
+        }
+        // Pausamos o reanudamos la animación sin perder los grados de rotación
+        vinyl.style.animationPlayState = isAudible ? 'running' : 'paused';
     }
 
+    // 3. Lógica de las notas musicales
     if (isAudible) {
         if (!notesIntervalId) {
             notesIntervalId = setInterval(createFloatingNote, 800);
@@ -136,7 +146,7 @@ function startBackgroundMusic() {
         if (playPromise && playPromise.catch) {
             playPromise.catch(() => { /* la invitación sigue funcionando sin música */ });
         }
-        fadeVolume(FIRST_PLAY_VOLUME, 2000);
+        fadeVolume(INITIAL_VOLUME, 2000); // Usando la variable global
         updateMusicButtonUI(true);
     };
 
@@ -176,7 +186,7 @@ if (musicToggleBtn) {
             if (!musicHasStarted) {
                 startBackgroundMusic();
             } else {
-                const target = musicIsLooping ? LOOP_VOLUME : FIRST_PLAY_VOLUME;
+                const target = musicIsLooping ? LOOP_VOLUME : INITIAL_VOLUME;
                 const p = bgMusic.play();
                 if (p && p.catch) p.catch(() => {});
                 fadeVolume(target, 1000);
