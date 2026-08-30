@@ -2,6 +2,7 @@
 <html lang="es" class="dark scroll-smooth overflow-hidden">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="Invitación digital para la boda de Bryan y Katherin. Confirma tu asistencia y acompáñanos en este día tan especial.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Bryan & Katherin - ¡Nos Casamos! 14.11.2026</title>
 
@@ -229,9 +230,23 @@
             </section>
 
 
+            <!-- IMPORTANTE: El contenedor padre directo debe tener relative y overflow-hidden -->
+<div class="relative overflow-hidden w-full py-16">
+    
+    <!-- El fondo optimizado -->
+    <div class="js-parallax-bg absolute inset-0 bg-[url('assets/foto1.jpg')] bg-cover bg-center opacity-[0.09] pointer-events-none z-0 scale-125 will-change-transform origin-center"></div>
+    
+    <!-- Tu contenido (asegúrate de que tenga z-10 y relative para quedar por encima) -->
+    <div class="relative z-10 text-center mb-12 reveal-element">
+        <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">El Destino</span>
+        <h2 class="font-serif text-3xl text-white mt-1">Nuestra Historia</h2>
+        <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
+    </div>
+
+</div>
             <!-- SECTION 2: NUESTRA HISTORIA (Scroll-driven Word Reveal) -->
             <section id="historia" class="min-h-screen w-full flex flex-col justify-center px-8 py-20 relative">
-                <div class="absolute inset-0 bg-[url('assets/foto1.jpg')] bg-cover bg-fixed bg-center opacity-[0.09] pointer-events-none z-0"></div>
+                <div class="absolute inset-0 bg-[url('assets/foto1.webp')] bg-cover bg-fixed bg-center opacity-[0.09] pointer-events-none z-0"></div>
                 <div class="text-center mb-12 reveal-element">
                     <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">El Destino</span>
                     <h2 class="font-serif text-3xl text-white mt-1">Nuestra Historia</h2>
@@ -643,7 +658,7 @@
 
         <!-- SECTION 5: RSVP (CONFIRMACIÓN) -->
             <section class="min-h-screen w-full flex flex-col justify-center px-6 py-16 relative">
-               <div class="absolute inset-0 bg-[url('assets/foto2.jpg')] bg-cover bg-fixed bg-center opacity-[0.10] pointer-events-none z-0"></div>
+               <div class="absolute inset-0 bg-[url('assets/foto2.webp')] bg-cover bg-fixed bg-center opacity-[0.10] pointer-events-none z-0"></div>
                 <div class="text-center mb-8 reveal-element"> 
                     <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Confirmación de Asistencia</span>
                     <h2 class="font-serif text-3xl text-white mt-1">Acompáñanos</h2>

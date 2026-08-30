@@ -433,52 +433,32 @@ const panel = document.getElementById("palette-details");
 let abierto = null;
 
 botones.forEach(btn=>{
-
     btn.addEventListener("click",()=>{
-
         const grupo = btn.dataset.group;
-
         if(abierto===grupo){
-
             panel.classList.add("hidden");
             abierto=null;
             return;
         }
-
         abierto=grupo;
-
         const datos=palettes[grupo];
-
         panel.innerHTML=`
-
             <h4 class="text-center text-lg font-semibold mb-4">
                 ${datos.titulo}
             </h4>
-
             <div class="grid grid-cols-2 gap-3">
-
                 ${datos.colores.map(color=>`
-
                     <div class="flex items-center gap-3">
-
                         <span
                         class="w-6 h-6 rounded-full border"
                         style="background:${color[1]}"></span>
-
                         <span>${color[0]}</span>
-
                     </div>
-
                 `).join("")}
-
             </div>
-
         `;
-
         panel.classList.remove("hidden");
-
     });
-
 });
 
 /* -------------------------------------------------------------
@@ -553,7 +533,7 @@ botones.forEach(btn=>{
 // 1. BASE DE DATOS DE FAMILIAS
 const familiasData = window.familiasData || {};
 
-// 2. EXTRAER CÓDIGO DE LA URL (?guest=CODIGO)
+// 2. EXTRAER CÓDIGO DE LA URL (?guest=)
 const urlParams = new URLSearchParams(window.location.search);
 const guestCode = urlParams.get('guest');
 const familyMembers = familiasData[guestCode];
