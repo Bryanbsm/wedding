@@ -368,7 +368,7 @@ updateCountdown();
 function showDressCodeAlert() {
     Swal.fire({
         title: '<span class="font-serif text-2xl" style="color: #070B19;">Código de Vestimenta</span>',
-        html: '<p style="color: #475569; font-size: 0.875rem; font-family: Montserrat, sans-serif;">Agradecemos tu comprensión al <b>no usar prendas de color azul o blanco</b>, ya que estos tonos están reservados exclusivamente para los trajes de los novios.</p>',
+        html: '<p style="color: #475569; font-size: 0.875rem; font-family: Montserrat, sans-serif;">Agradecemos tu comprensión al <b>no usar prendas de color blanco, marfil. beige o de tonos azules</b>, ya que estos tonos están reservados exclusivamente para los trajes de los novios.</p>',
         icon: 'info',
         iconColor: '#D29082',
         confirmButtonText: '¡Entendido!',

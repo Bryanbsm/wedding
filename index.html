@@ -282,18 +282,23 @@
                     <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
                 </div>
 
-                <!-- Ceremony Elegant Card -->
-                <div class="glass-card rounded-3xl p-8 relative space-y-8 overflow-hidden reveal-element">
-                    <!-- Icon Header Foto Iglesia-->
-                     <div class="absolute inset-0 bg-[url('assets/iglesia.jpg')] bg-cover bg-center opacity-20 blur-[1px] z-0 transition-all duration-1000"></div>
-                    <div class="absolute inset-0 bg-navy-dark/60 z-0"></div>
-                     <!-- Icon Header -->
-                 <div class="relative z-10">
-                        <div class="flex justify-center mb-6">
-                            <div class="p-4 rounded-full bg-rosegold-300/5 border border-rosegold-300/20 text-rosegold-300">
-                                <i data-lucide="church" class="w-8 h-8"></i>
-                            </div>
-                        </div>
+<!-- Ceremony Elegant Card -->
+<div class="glass-card rounded-3xl p-8 relative space-y-8 overflow-hidden reveal-element">
+    
+    <!-- CONTENEDOR DE FONDO: Agrupamos imagen y capa oscura para evitar que se separen -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <!-- Ajusté la opacidad a 70 (opacity-70) para que la iglesia sea más visible debajo del filtro -->
+        <div class="absolute inset-0 bg-[url('assets/iglesia.png')] bg-cover bg-center opacity-70 blur-[1px] transition-all duration-1000"></div>
+        <div class="absolute inset-0 bg-navy-dark/60"></div>
+    </div>
+
+    <!-- Icon Header -->
+    <div class="relative z-10">
+        <div class="flex justify-center mb-6">
+            <div class="p-4 rounded-full bg-rosegold-300/5 border border-rosegold-300/20 text-rosegold-300">
+                <i data-lucide="church" class="w-8 h-8"></i>
+            </div>
+        </div>
 
                     <!-- Title & Venue -->
                     <div class="text-center space-y-2 mb-6">
@@ -308,7 +313,7 @@
                     <div class="grid grid-cols-2 gap-4 text-center">
                         <div class="space-y-1">
                             <span class="text-[9px] tracking-widest text-gold uppercase font-medium">Hora</span>
-                            <p class="text-sm font-light text-slate-200 mt-1">04:00 PM</p>
+                            <p class="text-sm font-light text-slate-200 mt-1">02:00 PM</p>
                         </div>
                          
                         <!-- Tooltip Interactivo para Vestimenta -->

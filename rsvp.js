@@ -23,7 +23,7 @@ window.familiasData = {
         "BLANCA MEJIA",
         "DENIS",
         "BREINER",
-        "HIJO DENIS",
+        "STIVEN",
         "ISABELLA"
     ],
     "15305B": [
@@ -71,7 +71,7 @@ window.familiasData = {
         "LINA VILLA",
         "SOFIA MARTINEZ",
         "SARA MARTINEZ",
-        "BEBE"
+        "MARIA MARTINEZ"
     ],
     "421014B": [
         "ANDRES MARTINEZ"
@@ -155,6 +155,7 @@ window.familiasData = {
     ],
     "1052035K": [
         "TATIANA",
+        "PAREJA",
         "VALENTIN"
     ],
     "1083036K": [
