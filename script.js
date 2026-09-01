@@ -385,7 +385,7 @@ function showDressCodeAlert() {
 const palettes = {
 
     negros: {
-        titulo: "Negros y Grises",
+        titulo: "Oscuros y Grises",
         colores: [
             ["Negro", "#070707"],
             ["Grafito", "#2a2b2d"],

@@ -246,7 +246,7 @@
 </div>
             <!-- SECTION 2: NUESTRA HISTORIA (Scroll-driven Word Reveal) -->
             <section id="historia" class="min-h-screen w-full flex flex-col justify-center px-8 py-20 relative">
-                <div class="absolute inset-0 bg-[url('assets/foto1.webp')] bg-cover bg-fixed bg-center opacity-[0.09] pointer-events-none z-0"></div>
+                <div class="absolute inset-0 bg-[url('assets/foto1.webp')] bg-cover bg-fixed bg-center opacity-[0.49] pointer-events-none z-0"></div>
                 <div class="text-center mb-12 reveal-element">
                     <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">El Destino</span>
                     <h2 class="font-serif text-3xl text-white mt-1">Nuestra Historia</h2>
@@ -577,59 +577,60 @@
                     </div>
 
 
-                    <div class="flex flex-wrap justify-center gap-4 mt-4">
+                                            <!-- GRID CONTENEDOR: 3 columnas en móviles, 5 en pantallas medianas -->
+                            <div class="grid grid-cols-3 md:grid-cols-5 justify-items-center gap-4 mt-4">
 
-                            <!-- Blanco -->
-                            <div class="group flex flex-col items-center">
-                                <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#FFFFFF;">
-                                    <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
-                                        <path d="M6 6L18 18M18 6L6 18"/>
-                                    </svg>
+                                <!-- 1. Blanco -->
+                                <div class="group flex flex-col items-center">
+                                    <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#FFFFFF;">
+                                        <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                                            <path d="M6 6L18 18M18 6L6 18"/>
+                                        </svg>
+                                    </div>
+                                    <p class="mt-2 text-xs text-center text-gray-700">Blanco</p>
                                 </div>
-                                <p class="mt-2 text-xs text-center text-gray-700">Blanco</p>
-                            </div>
 
-                            <!-- Beige -->
-                            <div class="group flex flex-col items-center">
-                                <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#F5F5DC;">
-                                    <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
-                                        <path d="M6 6L18 18M18 6L6 18"/>
-                                    </svg>
+                                <!-- 2. Beige -->
+                                <div class="group flex flex-col items-center">
+                                    <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#F5F5DC;">
+                                        <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                                            <path d="M6 6L18 18M18 6L6 18"/>
+                                        </svg>
+                                    </div>
+                                    <p class="mt-2 text-xs text-center text-gray-700">Beige</p>
                                 </div>
-                                <p class="mt-2 text-xs text-center text-gray-700">Beige</p>
-                            </div>
 
-                            <!-- Amarillo -->
-                            <div class="group flex flex-col items-center">
-                                <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#c4be11;">
-                                    <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
-                                        <path d="M6 6L18 18M18 6L6 18"/>
-                                    </svg>
+                                <!-- 3. Amarillo -->
+                                <div class="group flex flex-col items-center">
+                                    <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#e3dc24;">
+                                        <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                                            <path d="M6 6L18 18M18 6L6 18"/>
+                                        </svg>
+                                    </div>
+                                    <p class="mt-2 text-xs text-center text-gray-700">Amarillo</p>
                                 </div>
-                                <p class="mt-2 text-xs text-center text-gray-700">Amarillo</p>
-                            </div>
 
-                            <!-- Azul Oscuro -->
-                            <div class="group flex flex-col items-center">
-                                <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#2D5678;">
-                                    <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
-                                        <path d="M6 6L18 18M18 6L6 18"/>
-                                    </svg>
+                                <!-- 4. Azul Oscuro -->
+                                <div class="group flex flex-col items-center">
+                                    <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#0e3351;">
+                                        <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                                            <path d="M6 6L18 18M18 6L6 18"/>
+                                        </svg>
+                                    </div>
+                                    <p class="mt-2 text-xs text-center text-gray-700">Azul Oscuro</p>
                                 </div>
-                                <p class="mt-2 text-xs text-center text-gray-700">Azul Oscuro</p>
-                            </div>
 
-                            <!-- Azul Claro -->
-                            <div class="group flex flex-col items-center">
-                                <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#3C6E9A;">
-                                    <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
-                                        <path d="M6 6L18 18M18 6L6 18"/>
-                                    </svg>
+                                <!-- 5. Azul Claro -->
+                                <div class="group flex flex-col items-center">
+                                    <div class="flex items-center justify-center w-8 h-8 rounded-full border border-gray-300 shadow" style="background:#69a7de;">
+                                        <svg class="w-6 h-6 text-red-600 drop-shadow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
+                                            <path d="M6 6L18 18M18 6L6 18"/>
+                                        </svg>
+                                    </div>
+                                    <p class="mt-2 text-xs text-center text-gray-700">Azul Claro</p>
                                 </div>
-                                <p class="mt-2 text-xs text-center text-gray-700">Azul Claro</p>
-                            </div>
 
-                        </div>
+                            </div>
 
 
 
@@ -640,7 +641,7 @@
             </section>
 
 
-  <!-- SECTION 6: SOLO ADULTOS-->
+  <!-- SECTION 6: SOLO ADULTOS
 
              <section class="w-full flex flex-col justify-center px-6 py-4 relative mb-8">
                 <div class="glass-card rounded-3xl p-6 text-center reveal-element border border-rosegold-300/20">
@@ -655,8 +656,9 @@
                     </p>
                 </div>
             </section>
+            -->
 
-<!-- Elegant Card for Details / Souvenir (Lluvia de sobres) icono regalo -->
+<!-- Elegant Card for Details / Souvenir (Lluvia de sobres) icono regalo 
  
                 <div class="glass-card rounded-3xl p-6 mt-6 relative space-y-4 reveal-element">
                     <div class="flex items-center gap-4">
@@ -664,12 +666,11 @@
                             <i data-lucide="gift" class="w-10 h-10"></i>
                         </div>
                         <div>
-                         <!--    <h4 class="font-serif text-lg text-white font-light">LS</h4>-->
                             <p class="text-sm text-slate-400 mt-0.5">Tu presencia es nuestro mayor regalo, poder compartir este dia contigo.</p>
                         </div>
                     </div>
                 </div>
-          
+          -->
 
 
         <!-- SECTION 5: RSVP (CONFIRMACIÓN) -->
@@ -678,7 +679,7 @@
                 <div class="text-center mb-8 reveal-element"> 
                     <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Confirmación de Asistencia</span>
                     <h2 class="font-serif text-3xl text-white mt-1">Acompáñanos</h2>
-                    <p class="text-base text-slate-400 mt-2">Agradecemos confirmar tu asistencia antes del <br> 15 de Octubre de 2026</p>
+                    <p class="text-base text-slate-400 mt-2"> <br> </p>
                     <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-4"></div>
                 </div>
 
