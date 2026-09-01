@@ -254,23 +254,30 @@
                 </div>
 
                 <!-- Word-by-word reveal target paragraph -->
-                <div class="glass-card rounded-2xl p-8 relative overflow-hidden">
+             <div class="glass-card rounded-2xl p-8 relative overflow-hidden">
                     <!-- Elegant background quote marks -->
-                    <span class="absolute top-2 left-4 text-7xl font-serif text-rosegold-300/5 select-none">“</span>
+                    <span class="absolute top-2 left-4 text-9xl font-serif text-rosegold-300/5 select-none">“</span>
                     
-                    <p id="story-text" class="text-center font-serif text-lg leading-relaxed text-slate-300/90 italic tracking-wide">
+                    <!-- Cambiado text-lg por text-xl -->
+                    <p id="story-text" class="text-center font-serif text-xl leading-relaxed text-slate-300/90 italic tracking-wide">
                         Hay momentos en la vida que son mágicos y personas que se convierten en nuestro hogar. 
                         Desde el primer día supimos que queríamos escribir un siempre juntos. 
                         Hoy decidimos dar el paso más importante de nuestras vidas, uniendo nuestros caminos en un solo destino. 
                         Queremos celebrar este inicio eterno junto a ti.
                     </p>
 
+
+                 
                     <span class="absolute bottom-[-20px] right-4 text-7xl font-serif text-rosegold-300/5 select-none">”</span>
                 </div>
+                    <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
 
-                <div class="mt-8 text-center reveal-element">
-                    <p class="font-sans text-xs tracking-widest text-rosegold-300/70 font-light italic">"El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."</p>
-                </div>
+<div class="mt-8 text-center reveal-element flex justify-center">
+    <!-- Añadido backdrop-blur-sm, bg-black/20, padding (px-4 py-2) y drop-shadow -->
+    <p class="font-sans text-xs tracking-widest text-rosegold-300 font-light italic px-4 py-2 rounded-lg backdrop-blur-sm bg-black/20 shadow-lg drop-shadow-md inline-block max-w-[90%]">
+        "El amor no consiste en mirarse el uno al otro, sino en mirar juntos en la misma dirección."
+    </p>
+</div>
             </section>
 
 
