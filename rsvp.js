@@ -4,10 +4,9 @@ window.familiasData = {
         "JACQUELINE MEJIA MIRANDA",
         "BENITO GERMAN MARTINEZ"
     ],
-    "1": [
+    "1B": [
         "USUARIO DE PRUEBA 1",
-        "USUARIO DE PRUEBA 2 USUARIOSDE",
-        "USUARIO DE PRUEBA 4",
+        "USUARIO DE PRUEBA 3",
         "USUARIO DE PRUEBA 5 UAUA"
     ],
     "6302B": [
