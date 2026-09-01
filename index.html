@@ -12,14 +12,14 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Bryan & Katherin" > 
     <meta property="og:description" content="Toca para abrir tu invitación 💌">
-    <meta property="og:image" content="https://bryanbsm.github.io/invitacion1/assets/preview-sobre.png">
+    <meta property="og:image" content="https://bryanbsm.github.io/wedding/assets/preview-sobre.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:url" content="https://bryanbsm.github.io/invitacion1/index.html">
+    <meta property="og:url" content="https://bryanbsm.github.io/wedding/index.html">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Bryan & Katherin" >
     <meta name="twitter:description" content="Toca para abrir tu invitación 💌">
-    <meta name="twitter:image" content="https://bryanbsm.github.io/invitacion1/assets/preview-sobre.png">
+    <meta name="twitter:image" content="https://bryanbsm.github.io/wedding/assets/preview-sobre.png">
 
     <!-- Favicon / ícono al agregar a inicio del celular (mismo lacre de la invitación) -->
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -233,9 +233,9 @@
             <!-- IMPORTANTE: El contenedor padre directo debe tener relative y overflow-hidden -->
 <div class="relative overflow-hidden w-full py-16">
     
-    <!-- El fondo optimizado -->
-    <div class="js-parallax-bg absolute inset-0 bg-[url('assets/foto1.jpg')] bg-cover bg-center opacity-[0.09] pointer-events-none z-0 scale-125 will-change-transform origin-center"></div>
-    
+    <!-- El fondo optimizado    otro fondo desliza 
+    <div class="js-parallax-bg absolute inset-0 bg-[url('assets/foto1.webp')] bg-cover bg-center opacity-[0.09] pointer-events-none z-0 scale-125 will-change-transform origin-center"></div>
+    -->
     <!-- Tu contenido (asegúrate de que tenga z-10 y relative para quedar por encima) -->
     <div class="relative z-10 text-center mb-12 reveal-element">
         <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Desliza para descubrir</span>
@@ -350,7 +350,10 @@
 
 <!-- SECTION 5 FECHA (Calendario interactivo + Cuenta Regresiva) -->
             <section class="w-full px-6 py-12 flex flex-col items-center">
+           <section id="historia" class="min-h-screen w-full flex flex-col justify-center px-8 py-20 relative">
+                <div class="absolute inset-0 bg-[url('assets/foto3.webp')] bg-cover bg-fixed bg-center opacity-[0.49] pointer-events-none z-0"></div>
                 <div class="text-center mb-6 reveal-element">
+                    
                     <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Guarda la Fecha</span>
                     <h2 class="font-serif text-3xl text-white mt-1">Fecha</h2>
                     <div class="w-10 h-[1px] bg-rosegold-300/40 mx-auto mt-3"></div>
@@ -665,7 +668,7 @@
             </section>
             -->
 
-<!-- Elegant Card for Details / Souvenir (Lluvia de sobres) icono regalo 
+  <!-- Elegant Card for Details / Souvenir (Lluvia de sobres) icono regalo -->
  
                 <div class="glass-card rounded-3xl p-6 mt-6 relative space-y-4 reveal-element">
                     <div class="flex items-center gap-4">
@@ -677,7 +680,8 @@
                         </div>
                     </div>
                 </div>
-          -->
+                                                                         <div class="w-10 h-[1px] bg-rosegold-300/20 mx-auto my-5"></div>
+
 
 
         <!-- SECTION 5: RSVP (CONFIRMACIÓN) -->
