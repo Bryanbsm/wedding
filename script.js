@@ -65,7 +65,7 @@ lucide.createIcons();
             let progress = 0;
             
             const interval = setInterval(() => {
-                progress += Math.floor(Math.random() * 12) + 6;
+                progress += Math.floor(Math.random() * 11) + 3;
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);

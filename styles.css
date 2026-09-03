@@ -475,7 +475,7 @@ input:focus, textarea:focus {
 
 /* Animación continua del fondo de carretera sin cortes raros 2.5*/
 .animate-road {
-    background-image: url('camino1.png');
+    background-image: url('assets/animated/camino1.png');
     background-repeat: repeat-x;
     background-size: auto 100%;
     animation: scrollRoad 7.5s linear infinite;
