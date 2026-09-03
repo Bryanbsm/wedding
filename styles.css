@@ -466,3 +466,49 @@ input:focus, textarea:focus {
     pointer-events: none;
     z-index: 0;
 }
+
+
+
+/* ============================================================
+   ANIMACIÓN DE CARRETERA Y MOTO (RSVP)
+============================================================ */
+
+/* Animación continua del fondo de carretera sin cortes raros 2.5*/
+.animate-road {
+    background-image: url('camino1.png');
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    animation: scrollRoad 7.5s linear infinite;
+}
+
+@keyframes scrollRoad {
+    0% { background-position: 0 0; }
+        /* Ajusta este valor (-800px) dependiendo del ancho real de tu camino1.png */
+
+    /* El tamaño exacto compensa el ancho de tu imagen para un bucle perfecto */
+    100% { background-position: -1952px 0; } 
+}
+
+/* Animación de avance de la moto (simulando barra de progreso) */
+.animate-moto {
+    animation: driveMoto 5.2s ease-in-out forwards;
+}
+
+@keyframes driveMoto {
+    0% { left: -20%; }
+    40% { left: 35%; }
+    80% { left: 65%; }
+    100% { left: 120%; } /* Cruza y sale del contenedor al terminar 120%*/ 
+}
+/* Animación para los puntos suspensivos */
+.loading-dots::after {
+    content: '';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}

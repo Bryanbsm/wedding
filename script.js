@@ -645,6 +645,8 @@ if (savedRSVP && familyMembers) {
     try { renderSuccess(JSON.parse(savedRSVP).asiste); } catch (e) {}
 }
 
+
+/**
 // 6. ENVÍO DE DATOS A SPREADSHEET
 rsvpForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -706,6 +708,95 @@ rsvpForm.addEventListener('submit', function (e) {
     });
 });
 
+*/
+
+// 6. ENVÍO DE DATOS A SPREADSHEET Y ANIMACIÓN DE MOTO
+rsvpForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const asisteGeneral = document.querySelector('input[name="attendance"]:checked').value;
+    const guestMessage = document.getElementById('guest-message').value.trim();
+    
+    let asistentesNombres = "";
+    let cantidadAsistentes = 0;
+
+    if (asisteGeneral === 'SI') {
+        const toggles = document.querySelectorAll('.member-toggle:checked');
+        toggles.forEach(toggle => {
+            asistentesNombres += `-${toggle.value}\n`;
+            cantidadAsistentes++;
+        });
+        asistentesNombres = asistentesNombres.trim();
+        
+        if(cantidadAsistentes === 0) {
+            alert("Si indican que asistirán, debes seleccionar al menos a un miembro de la familia.");
+            return;
+        }
+    }
+
+    // 1. Bloquear botón y preparar overlay
+    submitBtn.disabled = true;
+    const loadingOverlay = document.getElementById('loading-overlay');
+    
+    // 2. Mostrar la pantalla de carga (Moto) con transición suave
+    loadingOverlay.classList.remove('hidden');
+    loadingOverlay.classList.add('flex');
+    setTimeout(() => {
+        loadingOverlay.classList.remove('opacity-0');
+        loadingOverlay.classList.add('opacity-100');
+    }, 10);
+
+    const urlAppScript = 'https://script.google.com/macros/s/AKfycbw-sDHp-YZ3O5d0XvnTAnLUCvdNvehv86bbdUyDGz1es7P_EEs5Tz9XAcoE11E0FmpgZg/exec';
+    
+    const payload = {
+        code: guestCode,
+        nombre: familyMembers[0], 
+        asiste: asisteGeneral,
+        cant: cantidadAsistentes,
+        asistentes: asistentesNombres,
+        transporte: transportToggle ? (transportToggle.checked ? "SI" : "NO") : "NO",
+        mensaje: guestMessage
+    };
+
+    // Promesa 1: Enviar los datos a Google Sheets
+    const fetchPromise = fetch(urlAppScript, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+    }).then(response => response.json());
+
+    // Promesa 2: Temporizador para la animación de la moto (5200ms exactos como en tu CSS)
+    const animationPromise = new Promise(resolve => setTimeout(resolve, 5200));
+
+    // Esperar a que AMBAS cosas terminen (La petición a la base de datos y la animación)
+    Promise.all([fetchPromise, animationPromise])
+    .then(([data]) => {
+        // Desvanecer la pantalla de carga de la moto
+        loadingOverlay.classList.remove('opacity-100');
+        loadingOverlay.classList.add('opacity-0');
+
+        // Esperar a que se desvanezca antes de ocultarla y mostrar el éxito
+        setTimeout(() => {
+            loadingOverlay.classList.remove('flex');
+            loadingOverlay.classList.add('hidden');
+
+            if (data.status === 'success') {
+                localStorage.setItem(RSVP_STORAGE_KEY, JSON.stringify(payload));
+                renderSuccess(asisteGeneral); // Aquí ocurre la transición a la pantalla final
+                if (asisteGeneral === 'SI') createConfetti();
+            }
+        }, 500); 
+    })
+    .catch(error => {
+        // En caso de error, ocultar la animación y reactivar el botón
+        loadingOverlay.classList.remove('flex', 'opacity-100');
+        loadingOverlay.classList.add('hidden', 'opacity-0');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Confirmar Asistencia';
+        alert('Hubo un error al registrar. Intenta de nuevo.');
+    });
+});
+
 editRsvpBtn.addEventListener('click', function () {
     localStorage.removeItem(RSVP_STORAGE_KEY);
     successScreen.classList.add('hidden');
@@ -732,7 +823,7 @@ function createConfetti() {
     }
 }
 /* -------------------------------------------------------------
-   6. SOBRE DE BIENVENIDA (abrir con el primer scroll/tap,
+   8. SOBRE DE BIENVENIDA (abrir con el primer scroll/tap,
       y "guardar" la carta de nuevo al volver arriba)
 ------------------------------------------------------------- */
 const envelopeGate = document.getElementById('envelope-gate');
@@ -943,3 +1034,34 @@ function pulseButton(btn) {
     setTimeout(() => btn.classList.remove('fc-bump', 'fc-pulse'), 650);
 }
 
+
+/**
+ 
+
+// Obtén el botón de confirmación y la pantalla de carga
+const btnConfirmar = document.getElementById('submit-btn'); // Cambia el ID por el de tu botón
+const loadingOverlay = document.getElementById('loading-overlay');
+
+btnConfirmar.addEventListener('click', (e) => {
+    // Evita el envío inmediato si es un formulario
+    e.preventDefault(); 
+
+    // 1. Mostrar la animación
+    loadingOverlay.classList.remove('hidden');
+    loadingOverlay.classList.add('flex');
+
+    // 2. Esperar a que la moto cruce la pantalla (4 segundos) antes de procesar
+    setTimeout(() => {
+        // Aquí ejecutas la lógica de enviar datos a Google Sheets
+        // console.log("Enviando asistencia...");
+        
+ const urlAppScript = 'https://script.google.com/macros/s/AKfycbw-sDHp-YZ3O5d0XvnTAnLUCvdNvehv86bbdUyDGz1es7P_EEs5Tz9XAcoE11E0FmpgZg/exec';
+   
+
+        // Opcional: ocultar la pantalla después de enviar
+        // loadingOverlay.classList.remove('flex');
+        // loadingOverlay.classList.add('hidden');
+    }, 4000); // 4000ms = 4 segundos (el mismo tiempo de la animación driveMoto)
+}); 
+
+*/

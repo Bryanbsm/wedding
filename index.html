@@ -843,8 +843,33 @@
 
     </div>
 
+<!-- Pantalla de carga animada -->
+<div id="loading-overlay" class="fixed inset-0 z-[100] bg-navy-dark/70 backdrop-blur-sm hidden flex-col justify-center items-center opacity-0 transition-opacity duration-500">
+    
+    <!-- Contenedor ajustado con margen superior (mt-24) para bajar la animación -->
+    <div class="w-full max-w-md flex flex-col items-center mt-24">
+        
+        <!-- Contenedor de la carretera -->
+        <div class="relative w-full h-32 overflow-hidden rounded-xl border border-gold/20 shadow-[0_0_15px_rgba(212,175,55,0.2)] mb-6">
+            <!-- Fondo de carretera que se repite -->
+            <div class="absolute inset-0 w-full h-full animate-road"></div>
+            <!-- Moto (Barra de progreso) -->
+            <img src="moto.png" alt="Moto avanzando" class="absolute bottom-2 left-[-20%] w-20 animate-moto">
+        </div>
+
+        <!-- Texto con puntos suspensivos animados -->
+        <h3 class="text-rosegold-300 font-serif text-2xl tracking-widest text-center">
+            Confirmando asistencia<span class="loading-dots"></span>
+        </h3>
+        
+    </div>
+</div>
+
     <script src="rsvp.js"></script>
     <script src="music.js"></script>
     <script src="script.js"></script>
+
+   
+
 </body>
 </html>
