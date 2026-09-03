@@ -121,9 +121,16 @@ function createFloatingNote() {
     note.innerText = notesSymbols[Math.floor(Math.random() * notesSymbols.length)];
     note.className = 'music-note-anim';
 
-    const leftOffset = Math.random() * 20 - 10;
+    const leftOffset = Math.random() * 20 - 18;
     note.style.left = `calc(50% + ${leftOffset}px)`;
-    note.style.bottom = '10px';
+// 2. POSICIÓN VERTICAL: Nacen más arriba para no quedar detrás del disco
+    note.style.bottom = '58px';
+
+// 3. VISIBILIDAD: Más grandes, color dorado y por encima de todo
+    note.style.color = '#907829'; 
+    note.style.fontSize = '24px'; 
+    note.style.zIndex = '60'; 
+    note.style.textShadow = '0 0 8px rgba(255,255,255,0.4)';
 
     container.appendChild(note);
 
