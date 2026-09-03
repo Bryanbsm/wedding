@@ -779,7 +779,7 @@ function openEnvelope() {
 
     setTimeout(() => envelopeFlap.classList.add('is-open'), 150);
     setTimeout(() => letterCard.classList.add('is-open'), 550);
-    setTimeout(() => envelopeGate.classList.add('is-hidden'), 1300);
+    setTimeout(() => envelopeGate.classList.add('is-hidden'), 1900);
 
     setTimeout(() => {
         envelopeGate.style.display = 'none';
@@ -789,7 +789,7 @@ function openEnvelope() {
         hasScrolledAway = false;
             revealFloatingControls();   // ← revelar botones flotantes
 
-    }, 2000);
+    }, 2700); // reatraso para que la animación del sobre termine antes de desbloquear el scroll
 }
 
 function closeEnvelope() {
