@@ -72,6 +72,7 @@
         }
     </script>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="minigame.css">
 
 </head>
 <body class="flex justify-center items-center min-h-screen text-slate-800 dark:text-slate-100 font-sans antialiased overflow-x-hidden overflow-hidden selection:bg-rosegold-300 selection:text-navy-dark transition-colors duration-500">
@@ -688,7 +689,8 @@
 
 
         <!-- SECTION 5: RSVP (CONFIRMACIÓN) -->
-            <section class="min-h-screen w-full flex flex-col justify-center px-6 py-16 relative">
+            <section class="min-h-screen w-full flex flex-col justify-center px-2 py-16 relative">
+                
                <div class="absolute inset-0 bg-[url('assets/foto2.webp')] bg-cover bg-fixed bg-center opacity-[0.10] pointer-events-none z-0"></div>
                 <div class="text-center mb-8 reveal-element"> 
                     <span class="text-[10px] tracking-[0.3em] text-gold uppercase font-semibold">Confirmación de Asistencia</span>
@@ -698,7 +700,8 @@
                 </div>
 
                 <!-- RSVP Form Card -->
-                <div class="glass-card rounded-3xl p-8 relative overflow-hidden reveal-element">
+                <div class="glass-card rounded-3xl p-3 relative overflow-hidden reveal-element w-full"> 
+                     <!-- p-3 ajusta el ancho de lo de adentro -->
                     
                     <!-- Mensaje de error si no hay código en la URL -->
                     <div id="invalid-code-msg" class="hidden text-center space-y-3 py-6">
@@ -791,6 +794,30 @@
             </section>
 
 
+<!-- SECRETO / MINIJUEGO -->
+<div id="secret-trigger" class="w-full py-12 flex flex-col items-center justify-center text-center px-6 relative z-10">
+    <p class="font-sans text-xs tracking-widest text-slate-500/60 italic mb-2">✨ Un pequeño secreto...</p>
+    <p class="font-serif text-sm text-slate-400/80">Si llegaste hasta aquí, quizá el cielo tenga algo preparado para ti... 💙</p>
+</div>
+
+<!-- Contenedor dinámico del contador y alertas laterales -->
+<div id="minigame-counter" class="fixed top-[70px] right-5 z-[60] flex flex-col items-end pointer-events-none">
+    <!-- Puntaje -->
+    <span id="minigame-score-text" class="glass-card px-3 py-1.5 rounded-full text-rosegold-300 font-serif font-bold text-sm shadow-lg border border-rosegold-300/30 opacity-0 transition-all duration-300 transform scale-90">
+        1X 💙
+    </span>
+    <!-- Aquí aparecerán las frases "Gracias por compartir..." -->
+    <div id="minigame-notifications" class="mt-2 flex flex-col items-end gap-2"></div>
+</div>
+
+<!-- LOGRO TIPO XBOX (Centro inferior) -->
+<div id="xbox-achievement" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[70] flex flex-col items-center pointer-events-none opacity-0 translate-y-10 transition-all duration-500">
+    <div class="bg-navy-dark/95 border border-rosegold-300/40 rounded-full px-6 py-3 shadow-[0_0_20px_rgba(212,175,55,0.2)] flex flex-col items-center">
+        <span class="text-[5px] tracking-[0.3em] text-slate-400 uppercase mb-1">🏆 Logro Desbloqueado</span>
+        <span id="xbox-achievement-text" class="font-serif text-base text-rosegold-300 font-bold">💙 Maestro del Amor 💙</span>
+    </div>
+</div>
+
 
             <!-- FOOTER MONOGRAM -->
             <footer class="py-16 text-center border-t border-slate-900 bg-navy-dark/50">
@@ -871,6 +898,7 @@
     <script src="rsvp.js"></script>
     <script src="music.js"></script>
     <script src="script.js"></script>
+    <script src="minigame.js"></script>
 
    
 
