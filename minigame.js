@@ -1,29 +1,38 @@
+// ============================================================
+// MINIJUEGO SECRETO - Boda Bryan & Katherin (V3 - RSVP)
+// ============================================================
+
 document.addEventListener("DOMContentLoaded", () => {
     
-    const TIEMPO_PUNTAJE_EN_PANTALLA = 500; 
+    // --- AJUSTES ---
+    const TIEMPO_PUNTAJE_EN_PANTALLA = 1500; 
     const TIEMPO_LOGRO_XBOX = 4000; 
+    
     const STORAGE_KEY = "bk_wedding_hearts";
+    const RSVP_STORAGE_KEY = "bk_wedding_rsvp_2026"; // Clave que guarda tu script original
     
     let score = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
     let isGameRunning = false;
     let spawnInterval = null;
 
-    // Hitos exactos (calculados basados en el puntaje actual)
+    // Hitos exactos
     let nextRedThresholds = [10, 50].filter(t => score < t); 
     let nextHundredRed = Math.floor(score / 100) * 100 + 100; 
-    let nextGolden = Math.floor(score / 50) * 50 + 50; // Se activa cada 50 puntos
+    let nextGolden = Math.floor(score / 50) * 50 + 50; 
     let nextAchievement = Math.floor(score / 100) * 100 + 100;
     
     const sideAlerts = [
-        { pts: 10, msg: "❤️ Sigue así.", shown: score >= 10 },
-        { pts: 25, msg: "❤️ Cada latido nos acerca más a nuestro gran día.", shown: score >= 25 }
+        { pts: 10, msg: "❤️ Sigue asi.", shown: score >= 10 },
+        { pts: 25, msg: "❤️ Increible Continua.", shown: score >= 25 }
     ];
 
+    // Elementos del DOM
     const triggerEl = document.getElementById("secret-trigger");
     const counterText = document.getElementById("minigame-score-text");
     const notifContainer = document.getElementById("minigame-notifications");
     const xboxContainer = document.getElementById("xbox-achievement");
     const xboxText = document.getElementById("xbox-achievement-text");
+    const rsvpForm = document.getElementById("rsvp-form");
     
     const gameContainer = document.createElement("div");
     gameContainer.id = "minigame-container";
@@ -45,28 +54,47 @@ document.addEventListener("DOMContentLoaded", () => {
         osc.stop(audioCtx.currentTime + 0.1);
     }
 
+    // --- CONDICIÓN 1: ¿Ya confirmó asistencia previamente? ---
+    function hasConfirmedRSVP() {
+        return localStorage.getItem(RSVP_STORAGE_KEY) !== null;
+    }
+
+    // --- CONDICIÓN 2: Revisar al llegar al final de la página ---
     function initGameObserver() {
         if (!triggerEl) return;
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !isGameRunning) {
-                    setTimeout(() => startGame(), 1500);
+                // SOLO inicia si llegó al final Y ya tiene el RSVP confirmado
+                if (entry.isIntersecting && !isGameRunning && hasConfirmedRSVP()) {
+                    setTimeout(() => startGame(), 500);
                 }
             });
         }, { threshold: 0.5 });
         observer.observe(triggerEl);
     }
 
+    // --- CONDICIÓN 3: Revisar justo cuando envían el formulario ---
+    if (rsvpForm) {
+        rsvpForm.addEventListener("submit", () => {
+            // Esperamos medio segundo para confirmar que pasaron las validaciones de tu script original
+            setTimeout(() => {
+                const loadingOverlay = document.getElementById('loading-overlay');
+                // Si la pantalla de la moto está activa, es porque el formulario se envió con éxito
+                if (loadingOverlay && !loadingOverlay.classList.contains('hidden') && !isGameRunning) {
+                    startGame();
+                }
+            }, 500);
+        });
+    }
+
     function startGame() {
         if (isGameRunning) return;
         isGameRunning = true;
-        // Intervalo más rápido (cada 400ms) para garantizar flujo constante
-        spawnInterval = setInterval(() => createHeart(), 400);
+        spawnInterval = setInterval(() => createHeart(), 600); //intervalo de creación de corazones
     }
 
     function createHeart(forcedEmoji = null, forcedValue = null, fontSize = null) {
-        // Límite subido a 30 para evitar cuellos de botella visuales
-        if (gameContainer.childElementCount > 15) return; 
+        if (gameContainer.childElementCount > 15) return; //creacion de corazones limitada a 15 para evitar saturacion
 
         const wrapper = document.createElement("div");
         const inner = document.createElement("div");
@@ -74,14 +102,12 @@ document.addEventListener("DOMContentLoaded", () => {
         inner.className = "heart-inner";
 
         if (forcedEmoji) {
-            // Corazones especiales (Rojo o Dorado) por hitos
             inner.innerHTML = forcedEmoji;
             inner.style.fontSize = fontSize || "40px";
             wrapper.dataset.value = forcedValue;
             wrapper.style.animationDuration = "6s"; 
             wrapper.style.zIndex = "60"; 
         } else {
-            // Corazones azules normales
             inner.innerHTML = "💙";
             const size = Math.random() * 20 + 15;
             inner.style.fontSize = `${size}px`;
@@ -137,13 +163,11 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Corazón Dorado exacto cada 50
         if (score >= nextGolden) {
             nextGolden = Math.floor(score / 50) * 50 + 50; 
             createHeart("💛", 25, "35px");
         }
 
-        // Corazón Rojo
         if (nextRedThresholds.length > 0 && score >= nextRedThresholds[0]) {
             nextRedThresholds.shift();
             createHeart("❤️", 50, "45px");
@@ -153,7 +177,6 @@ document.addEventListener("DOMContentLoaded", () => {
             createHeart("❤️", 50, "45px");
         }
 
-        // Logro Xbox
         if (score >= nextAchievement) {
             nextAchievement = Math.floor(score / 100) * 100 + 100;
             showXboxAchievement("💙 Maestro del Amor 💙");

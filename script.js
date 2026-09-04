@@ -808,7 +808,7 @@ editRsvpBtn.addEventListener('click', function () {
 function createConfetti() {
     // ... tu código de confeti original se mantiene intacto aquí
     const colors = ['#E2B2A6', '#FAF0EE', '#D4AF37', '#885F30'];
-    for (let i = 0; i < 35; i++) {
+    for (let i = 0; i < 15; i++) {
         const confetti = document.createElement('div');
         confetti.classList.add('confetti');
         confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
