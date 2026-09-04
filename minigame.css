@@ -76,3 +76,40 @@
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* ==========================================
+   NUEVAS ANIMACIONES (Alertas y Xbox)
+========================================== */
+
+/* Hace que el puntaje aparezca y crezca un poquito */
+.counter-visible {
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+}
+
+/* Animación para las alertas que salen debajo del puntaje */
+.notif-fade-in-out {
+    animation: side-notif 4s ease-in-out forwards;
+}
+
+@keyframes side-notif {
+    0% { opacity: 0; transform: translateX(20px); }
+    10% { opacity: 1; transform: translateX(0); }
+    90% { opacity: 1; transform: translateX(0); }
+    100% { opacity: 0; transform: translateX(20px); }
+}
+
+/* Animación para el logro estilo Xbox 
+.xbox-show {
+    opacity: 1 !important;
+    transform: translateY(0) scale(1.05) !important;
+}*/
+
+#xbox-achievement {
+    transform: translateX(-50%) translateY(40px);
+}
+
+.xbox-show {
+    opacity: 1 !important;
+    transform: translateX(-50%) translateY(0) scale(1.05) !important;
+}

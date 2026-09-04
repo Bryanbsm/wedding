@@ -1,200 +1,184 @@
-// ============================================================
-// MINIJUEGO SECRETO - Boda Bryan & Katherin
-// ============================================================
-
 document.addEventListener("DOMContentLoaded", () => {
     
-    // Configuración general
+    const TIEMPO_PUNTAJE_EN_PANTALLA = 500; 
+    const TIEMPO_LOGRO_XBOX = 4000; 
     const STORAGE_KEY = "bk_wedding_hearts";
+    
     let score = parseInt(localStorage.getItem(STORAGE_KEY)) || 0;
     let isGameRunning = false;
     let spawnInterval = null;
-    let multiplier = 1; // Para la función x2
 
-    // Elementos del DOM
-    const triggerEl = document.getElementById("secret-trigger");
-    const rewardsContainer = document.getElementById("secret-rewards");
-    const counterContainer = document.getElementById("minigame-counter");
-    const counterText = document.getElementById("minigame-score-text");
+    // Hitos exactos (calculados basados en el puntaje actual)
+    let nextRedThresholds = [10, 50].filter(t => score < t); 
+    let nextHundredRed = Math.floor(score / 100) * 100 + 100; 
+    let nextGolden = Math.floor(score / 50) * 50 + 50; // Se activa cada 50 puntos
+    let nextAchievement = Math.floor(score / 100) * 100 + 100;
     
-    // Contenedor principal de corazones
+    const sideAlerts = [
+        { pts: 10, msg: "❤️ Sigue así.", shown: score >= 10 },
+        { pts: 25, msg: "❤️ Cada latido nos acerca más a nuestro gran día.", shown: score >= 25 }
+    ];
+
+    const triggerEl = document.getElementById("secret-trigger");
+    const counterText = document.getElementById("minigame-score-text");
+    const notifContainer = document.getElementById("minigame-notifications");
+    const xboxContainer = document.getElementById("xbox-achievement");
+    const xboxText = document.getElementById("xbox-achievement-text");
+    
     const gameContainer = document.createElement("div");
     gameContainer.id = "minigame-container";
     document.body.appendChild(gameContainer);
 
-    // Sistema de Audio Sintético (Pling) - ¡No requiere mp3!
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    
     function playPling() {
         if (audioCtx.state === 'suspended') audioCtx.resume();
         const osc = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
-        
         osc.connect(gainNode);
         gainNode.connect(audioCtx.destination);
-        
         osc.type = 'sine';
-        // Tono agudo y corto
         osc.frequency.setValueAtTime(900, audioCtx.currentTime); 
         osc.frequency.exponentialRampToValueAtTime(1400, audioCtx.currentTime + 0.1);
-        
-        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); // Volumen suave (0.1)
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime); 
         gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-        
         osc.start();
         osc.stop(audioCtx.currentTime + 0.1);
     }
 
-    // Inicializar el observador para saber cuándo llegan al final
     function initGameObserver() {
         if (!triggerEl) return;
-        
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !isGameRunning) {
-                    // Espera 2 segundos después de ver el texto antes de iniciar
-                    setTimeout(() => startGame(), 2000);
+                    setTimeout(() => startGame(), 1500);
                 }
             });
         }, { threshold: 0.5 });
-        
         observer.observe(triggerEl);
-        
-        // Comprobar recompensas previas al cargar
-        checkMilestones(true); 
     }
 
     function startGame() {
         if (isGameRunning) return;
         isGameRunning = true;
-        
-        // Genera un corazón cada X tiempo (entre 1 y 3 por segundo aprox)
-        spawnInterval = setInterval(createHeart, 600);
+        // Intervalo más rápido (cada 400ms) para garantizar flujo constante
+        spawnInterval = setInterval(() => createHeart(), 400);
     }
 
-    function createHeart() {
-        // Limitar máximo en pantalla para no saturar celulares
-        if (gameContainer.childElementCount > 12) return;
+    function createHeart(forcedEmoji = null, forcedValue = null, fontSize = null) {
+        // Límite subido a 30 para evitar cuellos de botella visuales
+        if (gameContainer.childElementCount > 15) return; 
 
         const wrapper = document.createElement("div");
         const inner = document.createElement("div");
-        
         wrapper.className = "heart-wrapper";
         inner.className = "heart-inner";
 
-        // Determinar tipo (Dorado o Normal) - 2% de probabilidad de Dorado
-        const isGold = Math.random() < 0.02; 
-        
-        if (isGold) {
-            inner.innerHTML = "💛";
-            inner.style.fontSize = "35px";
-            wrapper.dataset.value = 10; // Vale 10 puntos
+        if (forcedEmoji) {
+            // Corazones especiales (Rojo o Dorado) por hitos
+            inner.innerHTML = forcedEmoji;
+            inner.style.fontSize = fontSize || "40px";
+            wrapper.dataset.value = forcedValue;
+            wrapper.style.animationDuration = "6s"; 
+            wrapper.style.zIndex = "60"; 
         } else {
+            // Corazones azules normales
             inner.innerHTML = "💙";
-            // Tamaño aleatorio: más grande = cae más rápido (como hojas pesadas)
-            const size = Math.random() * 20 + 15; // Entre 15px y 35px
+            const size = Math.random() * 20 + 15;
             inner.style.fontSize = `${size}px`;
             wrapper.dataset.value = 1;
-            
-            // Duración de caída (inversa al tamaño)
-            const fallDuration = (55 - size) / 3; // Caerá entre 6s y 13s
+            const fallDuration = (55 - size) / 3;
             wrapper.style.animationDuration = `${fallDuration}s`;
         }
 
-        // Posición inicial horizontal aleatoria
-        wrapper.style.left = `${Math.random() * 90}vw`;
-        
-        // Velocidad del vaivén aleatoria
+        wrapper.style.left = `${Math.random() * 85}vw`;
         inner.style.animationDuration = `${Math.random() * 2 + 1.5}s`;
 
         wrapper.appendChild(inner);
         gameContainer.appendChild(wrapper);
 
-        // Interacción: tocar o hacer click
         wrapper.addEventListener("pointerdown", handleHeartClick);
-
-        // Destruir elemento cuando salga de la pantalla (evita lag)
         wrapper.addEventListener("animationend", (e) => {
-            if(e.animationName === "fall") {
-                wrapper.remove();
-            }
+            if(e.animationName === "fall") wrapper.remove();
         });
     }
 
     function handleHeartClick(e) {
         const wrapper = e.currentTarget;
-        if (wrapper.classList.contains("popped")) return; // Evita doble toque
+        if (wrapper.classList.contains("popped")) return; 
 
-        // 1. Reproducir sonido y animar pop
         playPling();
         wrapper.classList.add("popped");
-        
-        // Destello (Opcional, cambiando a estrellas)
         wrapper.querySelector('.heart-inner').innerHTML = "✨";
 
-        // 2. Sumar puntos
-        const points = parseInt(wrapper.dataset.value) * multiplier;
-        score += points;
+        score += parseInt(wrapper.dataset.value);
         localStorage.setItem(STORAGE_KEY, score);
 
-        // 3. Mostrar el contador en la esquina superior derecha
         showFloatingCounter(score);
-
-        // 4. Verificar si desbloqueó algo
         checkMilestones();
 
-        // 5. Eliminar elemento después de la animación de pop (200ms)
         setTimeout(() => wrapper.remove(), 250);
     }
 
     let counterTimeout;
     function showFloatingCounter(currentScore) {
-        // Remover clase para reiniciar animación si ya estaba visible
-        counterContainer.classList.remove("counter-animate");
-        
-        // Forzar reflujo para reiniciar la animación CSS
-        void counterContainer.offsetWidth; 
-        
-        // Actualizar texto y animar
         counterText.innerText = `${currentScore}X 💙`;
-        counterContainer.classList.add("counter-animate");
-
-        // Limpiar el timeout anterior para que no se oculte antes de tiempo
+        counterText.classList.add("counter-visible");
         clearTimeout(counterTimeout);
-        
-        // Ocultar la clase animada cuando acabe (0.5s dura la animación CSS)
         counterTimeout = setTimeout(() => {
-            counterContainer.classList.remove("counter-animate");
-        }, 500);
+            counterText.classList.remove("counter-visible");
+        }, TIEMPO_PUNTAJE_EN_PANTALLA);
     }
 
-    // ==========================================
-    // SISTEMA DE RECOMPENSAS / HITOS
-    // ==========================================
-    const milestones = [
-        { points: 10,  id: "ms10", html: `<p class="reward-item text-xs text-rosegold-300 italic">❤️ Gracias por compartir nuestra felicidad.</p>` },
-        { points: 25,  id: "ms25", html: `<p class="reward-item text-xs text-rosegold-300 italic">❤️ Cada latido nos acerca más a nuestro gran día.</p>` },
-        { points: 50,  id: "ms50", html: `<p class="reward-item text-sm text-rosegold-400 font-serif">"El amor siempre encuentra el camino."</p>` },
-        { points: 100, id: "ms100", html: `<div class="reward-item mt-3 inline-block px-4 py-2 border border-blue-400/30 bg-blue-900/20 rounded-full"><span class="text-xs font-bold text-blue-300 uppercase tracking-widest">💙 Maestro del Amor 💙</span></div>` }
-    ];
-
-    function checkMilestones(isInit = false) {
-        let newContent = false;
-        
-        milestones.forEach(ms => {
-            // Si pasamos el puntaje y no está renderizado en pantalla
-            if (score >= ms.points && !document.getElementById(ms.id)) {
-                const div = document.createElement("div");
-                div.id = ms.id;
-                div.innerHTML = ms.html;
-                rewardsContainer.appendChild(div);
-                
-                // Pequeña vibración en el celular al desbloquear algo nuevo
-                if (!isInit && navigator.vibrate) navigator.vibrate(50);
+    function checkMilestones() {
+        sideAlerts.forEach(alert => {
+            if (score >= alert.pts && !alert.shown) {
+                alert.shown = true;
+                showSideNotification(alert.msg);
             }
         });
+
+        // Corazón Dorado exacto cada 50
+        if (score >= nextGolden) {
+            nextGolden = Math.floor(score / 50) * 50 + 50; 
+            createHeart("💛", 25, "35px");
+        }
+
+        // Corazón Rojo
+        if (nextRedThresholds.length > 0 && score >= nextRedThresholds[0]) {
+            nextRedThresholds.shift();
+            createHeart("❤️", 50, "45px");
+        }
+        if (score >= nextHundredRed) {
+            nextHundredRed = Math.floor(score / 100) * 100 + 100;
+            createHeart("❤️", 50, "45px");
+        }
+
+        // Logro Xbox
+        if (score >= nextAchievement) {
+            nextAchievement = Math.floor(score / 100) * 100 + 100;
+            showXboxAchievement("💙 Maestro del Amor 💙");
+        }
     }
 
-    // Inicializar el módulo
+    function showSideNotification(text) {
+        const notif = document.createElement("div");
+        notif.className = "glass-card px-3 py-1.5 rounded-xl text-xs text-rosegold-300 notif-fade-in-out border border-rosegold-300/20";
+        notif.innerText = text;
+        notifContainer.appendChild(notif);
+        if (navigator.vibrate) navigator.vibrate(50);
+        setTimeout(() => notif.remove(), 4000); 
+    }
+
+    let xboxTimeout;
+    function showXboxAchievement(text) {
+        xboxText.innerText = text;
+        xboxContainer.classList.add("xbox-show");
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]); 
+        clearTimeout(xboxTimeout);
+        xboxTimeout = setTimeout(() => {
+            xboxContainer.classList.remove("xbox-show");
+        }, TIEMPO_LOGRO_XBOX);
+    }
+
     initGameObserver();
 });
