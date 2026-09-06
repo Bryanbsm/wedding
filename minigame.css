@@ -28,7 +28,7 @@
 .heart-inner {
     display: flex;
     align-items: center;
-    justify-center: center;
+  /*  justify-center: center;*/
     will-change: transform;
     animation: sway ease-in-out infinite alternate;
     transition: transform 0.2s ease, opacity 0.2s ease;
