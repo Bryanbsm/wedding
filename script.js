@@ -933,13 +933,13 @@ rsvpForm.addEventListener('submit', function (e) {
     }, 10);
 
     // --- NUEVO: Animación fluida de la barra de progreso ---
-    const duration = 5200; // 5.2 segundos exactos
+    const duration = 5500; // 6.2 segundos exactos
     const startTime = Date.now();
     let animationFrameId;
 
     function animateProgress() {
         const elapsed = Date.now() - startTime;
-        let percent = Math.floor((elapsed / duration) * 100);
+        let percent = Math.floor((elapsed / (duration-1500)) * 100);
         
         if (percent > 100) percent = 100;
 
@@ -987,7 +987,7 @@ rsvpForm.addEventListener('submit', function (e) {
     }).then(response => response.json());
 
     // Promesa 2: Temporizador para la animación de la moto (5200ms)
-    const animationPromise = new Promise(resolve => setTimeout(resolve, duration));
+    const animationPromise = new Promise(resolve => setTimeout(resolve, duration)); // +500ms para dar tiempo a la transición final
 
     // Esperar a que AMBAS cosas terminen
     Promise.all([fetchPromise, animationPromise])

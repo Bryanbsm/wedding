@@ -67,24 +67,44 @@
     color: white;
     display: flex;
     align-items: center;
-    gap: 15px;
-    padding: 12px 25px;
+    
+    /* Fase 1 (Colapsado): Solo envuelve el trofeo */
+    gap: 0px;
+    padding: 12px;
     border-radius: 50px;
+
+    /* EL SECRETO PARA ADAPTARSE AL TEXTO */
+    width: max-content; /* Permite que el contenedor busque su ancho natural */
+    max-width: 58px; /* Lo fuerza a colapsar al inicio cubriendo solo el icono *//* Tamaño para envolver exactamente el ícono de 35px + 20px de padding */
+
+    height: 58px;
+    overflow: hidden;
+    
     box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     z-index: 100;
     font-family: 'Montserrat', sans-serif;
-    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     pointer-events: none;
-
-    /* --- NUEVO: Reglas de ancho para adaptarse a pantallas móviles --- */
-    width: max-content;
-    max-width: 95vw; /* Ocupará hasta el 95% del ancho de la pantalla */
     box-sizing: border-box;
 
+    /* Animación de salida: Primero se encoge a los lados (0s delay), luego baja (0.4s delay) */
+    transition: max-width 0.4s ease 0s,
+                padding 0.4s ease 0s,
+                gap 0.4s ease 0s,
+                bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.4s;
 }
 
 .xbox-achievement.show {
+    /* Fase 2 (Expandido): Muestra todo el ancho */
     bottom: 40px;
+    max-width: 95vw; 
+    gap: 15px;
+    padding: 10px 25px 10px 10px;
+    
+    /* Animación de entrada: Primero sube (0s delay), luego se estira a los lados (0.4s delay) */
+    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0s,
+                max-width 0.4s ease 0.4s,
+                padding 0.4s ease 0.4s,
+                gap 0.4s ease 0.4s;
 }
 
 .xbox-icon {
@@ -93,6 +113,7 @@
     border-radius: 50%;
     width: 35px;
     height: 35px;
+    min-width: 35px; /* Previene que el trofeo se aplaste mientras el contenedor se encoge */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -103,9 +124,20 @@
 .xbox-text-container {
     display: flex;
     flex-direction: column;
-    /* --- NUEVO: Permite que el contenedor se ajuste al espacio sobrante --- */
-    flex: 1;
-    min-width: 0;
+    justify-content: center;
+    min-width: 200px; /* Asegura que el texto mantenga su forma original aunque esté oculto */
+    
+    /* Oculto por defecto */
+    opacity: 0;
+    /* Al desaparecer: el texto se oculta inmediatamente */
+    transition: opacity 0.2s ease 0s;
+}
+
+.xbox-achievement.show .xbox-text-container {
+    /* Visible al expandir */
+    opacity: 1;
+    /* Al aparecer: el texto se revela después de que el cuadro termine de expandirse (0.6s delay) */
+    transition: opacity 0.3s ease 0.6s;
 }
 
 .xbox-title {
@@ -118,7 +150,6 @@
 .xbox-desc {
     font-size: 0.95rem;
     font-weight: bold;
-    /* --- NUEVO: Permite saltos de línea para textos muy largos --- */
     white-space: normal;
     word-wrap: break-word;
     line-height: 1.2;

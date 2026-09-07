@@ -119,9 +119,7 @@ function checkMilestones() {
     
     if (score === 210) showAchievement("👑 Rey del Amor 👑");
 
-    if (score === 1000) showAchievement("❤️ El amor siempre encuentra el camino");
-    
-    if (score > 100 && score % 100 === 0) {
+    if (score >= 100 && score % 100 === 0) {
         showAchievement(`¡Gran Maestro x${score/100}!`);
     }
 }
