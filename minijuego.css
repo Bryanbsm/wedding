@@ -1,5 +1,5 @@
 /* Contenedor del puntaje efímero */
-#secret-score {
+#minigame-score-text {
     position: fixed;
     top: 70px;
     right: 20px;
@@ -14,7 +14,7 @@
 }
 
 .score-show {
-    animation: scoreFadeBounce 1.5s forwards;
+    animation: scoreFadeBounce 1.7s forwards;
 }
 
 @keyframes scoreFadeBounce {
@@ -29,9 +29,16 @@
     position: fixed;
     top: -50px;
     cursor: pointer;
-    user-select: none;
-    z-index: 45;
-    transition: transform 0.1s;
+    z-index: 9999; /* Asegura que esté por encima de cualquier otro menú de la app */
+    
+    /* INTERACCIÓN MÓVIL (Crucial) */
+    user-select: none; 
+    -webkit-user-select: none; /* Evita seleccionar el corazón como si fuera texto en iOS */
+    -webkit-tap-highlight-color: transparent; /* Quita el recuadro azul que sale al tocar en Android */
+    
+    /* RENDIMIENTO Y ANIMACIÓN */
+    will-change: transform; /* Activa la aceleración por hardware (GPU) para evitar tirones */
+    transition: transform 0.1s; /* Suaviza el efecto visual de "aplastar" el corazón al tocarlo */
 }
 
 .minijuego-heart:active {
@@ -125,106 +132,3 @@ html, body {
     -webkit-touch-callout: none;/* Evita el menú contextual prolongado en iOS */
 }
 
-/* Contenedor del puntaje efímero */
-#secret-score {
-    position: fixed;
-    top: 70px;
-    right: 20px;
-    font-family: 'Montserrat', sans-serif; /* Puedes cambiar esta fuente si lo deseas */
-    font-weight: bold;
-    color: #3b82f6;
-    font-size: 1.2rem;
-    z-index: 60;
-    opacity: 0;
-    pointer-events: none;
-    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
-}
-
-.score-show {
-    animation: scoreFadeBounce 0.3s forwards;
-}
-
-@keyframes scoreFadeBounce {
-    0% { opacity: 0; transform: translateY(10px) scale(0.8); }
-    50% { opacity: 1; transform: translateY(-5px) scale(1.1); }
-    100% { opacity: 0; transform: translateY(-15px) scale(1); }
-}
-
-/* Corazones cayendo */
-.minijuego-heart {
-    position: fixed;
-    top: -50px;
-    cursor: pointer;
-    z-index: 9999;
-    will-change: transform; /* Optimiza la animación en móviles */
-}
-
-.minijuego-heart:active {
-    transform: scale(0.9) !important;
-}
-
-/* Animación de desaparición al tocar */
-.heart-popped {
-    animation: popAndVanish 0.3s forwards !important;
-    pointer-events: none;
-}
-
-@keyframes popAndVanish {
-    0% { transform: scale(1); opacity: 1; filter: drop-shadow(0 0 5px rgba(255,255,255,0.8)); }
-    40% { transform: scale(1.25); opacity: 1; filter: drop-shadow(0 0 15px rgba(255,255,255,1)); }
-    100% { transform: scale(0); opacity: 0; }
-}
-
-/* Sistema de Logros */
-.xbox-achievement {
-    position: fixed;
-    bottom: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #107C10;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 12px 25px;
-    border-radius: 50px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    z-index: 10000;
-    font-family: 'Montserrat', sans-serif;
-    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    pointer-events: none;
-}
-
-.xbox-achievement.show {
-    bottom: 40px;
-}
-
-.xbox-icon {
-    background: white;
-    color: #107C10;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    box-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-
-.xbox-text-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.xbox-title {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    opacity: 0.9;
-}
-
-.xbox-desc {
-    font-size: 0.95rem;
-    font-weight: bold;
-}

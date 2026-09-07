@@ -203,15 +203,15 @@
                 </div>
 
                 <!-- Couples Name and Title -->
-                <div class="my-auto space-y-6">
+                <div class="my-auto space-y-6"> 
                     <div class="space-y-2">
                         <h1 class="font-serif text-4xl font-light tracking-wide text-white leading-relaxed">
                             Bryan <br>
-                            <p class="font-serif text-lg tracking-[0.2em] text-rosegold-200/80 italic mt-1">Martínez Mejia</p>
+                            <span class="block font-serif text-lg tracking-[0.2em] text-rosegold-200/80 italic mt-1">Martínez Mejia</span>
                             <span class="text-rosegold-300 text-3xl italic font-serif">&</span><br>
                             Katherin
                         </h1>
-                        <p class="font-serif text-lg tracking-[0.2em] text-rosegold-200/80 italic mt-1">Morales Arcila</p>
+                            <p class="font-serif text-lg tracking-[0.2em] text-rosegold-200/80 italic mt-1">Morales Arcila</p>
                     </div>
                     
                     <div class="w-12 h-[1px] bg-gradient-to-r from-transparent via-rosegold-300 to-transparent mx-auto my-4"></div>
@@ -352,8 +352,7 @@
            
 
 <!-- SECTION 5 FECHA (Calendario interactivo + Cuenta Regresiva) -->
-            <section class="w-full px-6 py-12 flex flex-col items-center">
-           <section id="historia" class="min-h-screen w-full flex flex-col justify-center px-8 py-20 relative">
+            <section id="fecha" class="min-h-screen w-full flex flex-col justify-center px-8 py-20 relative">
                 <div class="absolute inset-0 bg-[url('assets/foto4.webp')] bg-cover bg-fixed bg-center opacity-[0.49] pointer-events-none z-0"></div>
                 <div class="text-center mb-6 reveal-element">
                     
@@ -650,9 +649,6 @@
 
 
                                                 </div>
-                                                <div class="flex flex-wrap justify-center gap-4">
-
-                    </div>
             </section>
 
 
@@ -675,7 +671,7 @@
 
   <!-- Elegant Card for Details / Souvenir (Lluvia de sobres) icono regalo -->
  
-                <div class="glass-card rounded-3xl p-6 mt-6 relative space-y-4 reveal-element">
+                <div class="glass-card rounded-3xl p-6 mt-6 relative space-y-4 reveal-element" px-6 py-4 relative mb-8>
                     <div class="flex items-center gap-4">
                         <div class="p-5 rounded-full bg-gold/5 border border-gold/20 text-gold">
                             <i data-lucide="gift" class="w-10 h-10"></i>
@@ -701,8 +697,8 @@
                 </div>
 
                 <!-- RSVP Form Card -->
-                <div class="glass-card rounded-3xl p-3 relative overflow-hidden reveal-element w-full"> 
-                     <!-- p-3 ajusta el ancho de lo de adentro -->
+                <div class="glass-card rounded-3xl p-5 relative overflow-hidden reveal-element w-full"> 
+                     <!-- p-3 ajusta el ancho de lo de adent ro -->
                     
                     <!-- Mensaje de error si no hay código en la URL -->
                     <div id="invalid-code-msg" class="hidden text-center space-y-3 py-6">
@@ -819,9 +815,10 @@
    <!-- <span id="minigame-score-text" class="glass-card px-3 py-1.5 rounded-full text-rosegold-300 font-bold text-sm shadow-lg border border-rosegold-300/30 opacity-0">
         0 X 💙
     </span> -->
-    <span id="minigame-score-text" class="glass-card px-3 py-1.5 rounded-full text-rosegold-300 font-bold text-sm shadow-lg border border-rosegold-300/30 opacity-0" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
-        0 X 💙
-    </span>
+        <span id="minigame-score-text"
+            class="glass-card px-3 py-1.5 rounded-full text-rosegold-300 font-bold text-sm shadow-lg border border-rosegold-300/30">
+            0 X 💙
+        </span>
     
     <!-- Aquí aparecerán las frases "Gracias por compartir..."
     <div id="minigame-notifications" class="mt-2 flex flex-col items-end gap-2"></div> -->

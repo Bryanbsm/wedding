@@ -5,12 +5,12 @@
 const CONFIG = {
     // --- Sistema de Puntos ---
     puntosCorazonAzul: 1,         // Puntos que da el corazón normal
-    puntosCorazonDorado: 10,      // Puntos que da el corazón dorado
+    puntosCorazonDorado: 50,      // Puntos que da el corazón dorado
     duracionMultiplicador: 5000,  // Tiempo que dura el x2 en milisegundos (5000 = 5 segundos)
     
     // --- Probabilidades de aparición (deben sumar 1 o menos) ---
     probabilidadDorado: 0.02,     // 2% de que salga dorado
-    probabilidadMultiplicador: 0.03, // 3% de que salga el x2
+    probabilidadMultiplicador: 0.003, // 0.3% de que salga el x2
     
     // --- Frecuencia de caída ---
     tiempoAparicionMinimo: 800,   // Tiempo mínimo entre corazones (en milisegundos)
@@ -96,7 +96,7 @@ function showAchievement(text, duration = CONFIG.tiempoMostrarLogro) {
 
 // Verifica si llegaste a una meta de puntos para darte un logro
 function checkMilestones() {
-    if (score === 2) showAchievement("Sigue Buscando Corazonez❤️");
+    if (score === 2) showAchievement("Sigue Buscando Corazones❤️");
     if (score === 10) showAchievement("¡Encontraste 10 corazones!");
     if (score === 50) showAchievement("❤️ El amor siempre encuentra el camino");
     if (score === 100) showAchievement("💙 Maestro del Amor 💙");
