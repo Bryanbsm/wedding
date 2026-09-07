@@ -920,7 +920,7 @@ rsvpForm.addEventListener('submit', function (e) {
         }
     }
 
-    // 1. Bloquear botón y preparar overlay
+// 1. Bloquear botón y preparar overlay
     submitBtn.disabled = true;
     const loadingOverlay = document.getElementById('loading-overlay');
     
@@ -931,6 +931,16 @@ rsvpForm.addEventListener('submit', function (e) {
         loadingOverlay.classList.remove('opacity-0');
         loadingOverlay.classList.add('opacity-100');
     }, 10);
+
+    // --- NUEVO: Iniciar la barra en 0% apenas aparece el overlay ---
+    updateLoadingProgress(0, 'Preparando motores...'); 
+
+    // --- NUEVO: Simular el progreso dividido en los 5.2 segundos de la animación ---
+    const progressTimers = [
+        setTimeout(() => updateLoadingProgress(25, 'Registrando tu respuesta...'), 1300),
+        setTimeout(() => updateLoadingProgress(55, 'Guardando tu confirmación...'), 2600),
+        setTimeout(() => updateLoadingProgress(80, 'Casi terminamos...'), 4000)
+    ];
 
     const urlAppScript = 'https://script.google.com/macros/s/AKfycbw-sDHp-YZ3O5d0XvnTAnLUCvdNvehv86bbdUyDGz1es7P_EEs5Tz9XAcoE11E0FmpgZg/exec';
     
@@ -954,9 +964,12 @@ rsvpForm.addEventListener('submit', function (e) {
     // Promesa 2: Temporizador para la animación de la moto (5200ms exactos como en tu CSS)
     const animationPromise = new Promise(resolve => setTimeout(resolve, 5200));
 
-    // Esperar a que AMBAS cosas terminen (La petición a la base de datos y la animación)
+    // Esperar a que AMBAS cosas terminen
     Promise.all([fetchPromise, animationPromise])
     .then(([data]) => {
+        // --- NUEVO: Al finalizar con éxito, llegar al 100% ---
+        updateLoadingProgress(100, '¡Todo listo! ❤️');
+
         // Desvanecer la pantalla de carga de la moto
         loadingOverlay.classList.remove('opacity-100');
         loadingOverlay.classList.add('opacity-0');
@@ -969,11 +982,15 @@ rsvpForm.addEventListener('submit', function (e) {
             if (data.status === 'success') {
                 localStorage.setItem(RSVP_STORAGE_KEY, JSON.stringify(payload));
                 renderSuccess(asisteGeneral); // Aquí ocurre la transición a la pantalla final
-                if (asisteGeneral === 'SI') createConfetti();
+             //   if (asisteGeneral === 'SI') createConfetti();
             }
         }, 500); 
     })
     .catch(error => {
+        // --- NUEVO: Limpiar los temporizadores para que la barra no siga subiendo si hay error ---
+        progressTimers.forEach(timer => clearTimeout(timer));
+        updateLoadingProgress(0, 'Hubo un problema...');
+
         // En caso de error, ocultar la animación y reactivar el botón
         loadingOverlay.classList.remove('flex', 'opacity-100');
         loadingOverlay.classList.add('hidden', 'opacity-0');
@@ -991,6 +1008,27 @@ editRsvpBtn.addEventListener('click', function () {
     submitBtn.innerHTML = '<i data-lucide="send" class="w-4 h-4"></i> Confirmar Asistencia';
 });
 
+
+function updateLoadingProgress(percent, message) {
+    const progressBar = document.getElementById('loading-progress');
+    const percentText = document.getElementById('loading-percent');
+    const loadingMessage = document.getElementById('loading-message');
+
+    if (progressBar) {
+        progressBar.style.width = `${percent}%`;
+    }
+
+    if (percentText) {
+        percentText.textContent = `${percent} %`;
+    }
+
+    if (loadingMessage) {
+        loadingMessage.textContent = message;
+    }
+}
+
+
+/*
 function createConfetti() {
     // ... tu código de confeti original se mantiene intacto aquí
     const colors = ['#E2B2A6', '#FAF0EE', '#D4AF37', '#885F30'];
@@ -1008,6 +1046,7 @@ function createConfetti() {
         successScreen.appendChild(confetti);
     }
 }
+    */
 /* -------------------------------------------------------------
    8. SOBRE DE BIENVENIDA (abrir con el primer scroll/tap,
       y "guardar" la carta de nuevo al volver arriba)

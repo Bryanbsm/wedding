@@ -906,10 +906,34 @@
             <img src="assets/animated/camino1.png" alt="Camino preloader" >
         </div>
 
-        <!-- Texto con puntos suspensivos animados -->
+        <!-- Texto con puntos suspensivos animados 
         <h3 class="text-rosegold-300 font-serif text-2xl tracking-widest text-center">
             Confirmando asistencia<span class="loading-dots"></span>
-        </h3>
+        </h3>-->
+
+
+          
+
+
+                <!-- Barra de progreso -->
+                <div class="w-full max-w-md mx-auto mt-5 px-6">
+                    <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                        <div id="loading-progress"
+                            class="h-full bg-rosegold-300 rounded-full transition-all duration-500 ease-out"
+                            style="width: 0%;">
+                        </div>
+                    </div>
+                </div>
+                <!-- Porcentaje -->
+                <p id="loading-percent"
+                class="text-white/70 text-sm text-center mt-3">
+                    0 %
+                </p>
+              <!-- Mensaje de carga -->
+                    <h3 id="loading-message"
+                    class="text-rosegold-300 font-serif text-2xl tracking-widest text-center">
+                    Preparando tu confirmación...
+                </h3>
         
     </div>
 </div>
