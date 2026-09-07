@@ -15,7 +15,6 @@ window.familiasData = {
     ],
     "3B": [
         "USUARIO DE PRUEBA 1",
-        "USUARIO DE PRUEBA 3",
         "USUARIO DE PRUEBA 5 UAUA"
     ],
     "6302B": [

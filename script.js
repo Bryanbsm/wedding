@@ -857,9 +857,21 @@ function resetContentAnimations() {
     hero.style.transform = '';
     handleWordReveal();
 }
-
+async function intentarPantallaCompleta() {
+    try {
+        if (!document.fullscreenElement) {
+            await document.documentElement.requestFullscreen();
+        }
+    } catch (error) {
+        // Si el navegador no permite pantalla completa,
+        // la invitación continúa normalmente.
+        console.log('Pantalla completa no disponible.');
+    }
+}
 function openEnvelope() {
     if (envelopeIsOpen || envelopeAnimating) return;
+        // Intentar pantalla completa al abrir el sobre
+    intentarPantallaCompleta();
     envelopeAnimating = true;
     envelopeScene.classList.add('is-opening');
 
