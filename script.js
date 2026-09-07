@@ -924,7 +924,7 @@ rsvpForm.addEventListener('submit', function (e) {
     submitBtn.disabled = true;
     const loadingOverlay = document.getElementById('loading-overlay');
     
-    // 2. Mostrar la pantalla de carga (Moto) con transición suave
+    // 2. Mostrar la pantalla de carga con transición suave
     loadingOverlay.classList.remove('hidden');
     loadingOverlay.classList.add('flex');
     setTimeout(() => {
@@ -932,15 +932,40 @@ rsvpForm.addEventListener('submit', function (e) {
         loadingOverlay.classList.add('opacity-100');
     }, 10);
 
-    // --- NUEVO: Iniciar la barra en 0% apenas aparece el overlay ---
-    updateLoadingProgress(0, 'Preparando motores...'); 
+    // --- NUEVO: Animación fluida de la barra de progreso ---
+    const duration = 5200; // 5.2 segundos exactos
+    const startTime = Date.now();
+    let animationFrameId;
 
-    // --- NUEVO: Simular el progreso dividido en los 5.2 segundos de la animación ---
-    const progressTimers = [
-        setTimeout(() => updateLoadingProgress(25, 'Registrando tu respuesta...'), 1300),
-        setTimeout(() => updateLoadingProgress(55, 'Guardando tu confirmación...'), 2600),
-        setTimeout(() => updateLoadingProgress(80, 'Casi terminamos...'), 4000)
-    ];
+    function animateProgress() {
+        const elapsed = Date.now() - startTime;
+        let percent = Math.floor((elapsed / duration) * 100);
+        
+        if (percent > 100) percent = 100;
+
+        // Cambiar el mensaje según el porcentaje actual
+        let message = 'Preparando motores...';
+        if (percent >= 25 && percent < 55) {
+            message = 'Registrando tu respuesta...';
+        } else if (percent >= 50 && percent < 80) {
+            message = 'Guardando tu confirmación...';
+        } else if (percent >= 80 && percent < 100) {
+            message = 'Casi terminamos...';
+        } else if (percent === 100) {
+            message = '¡Todo listo! ❤️';
+        }
+
+        updateLoadingProgress(percent, message);
+
+        // Si no hemos llegado al 100%, seguir animando
+        if (percent < 100) {
+            animationFrameId = requestAnimationFrame(animateProgress);
+        }
+    }
+    
+    // Iniciar la animación
+    animationFrameId = requestAnimationFrame(animateProgress);
+    // -------------------------------------------------------
 
     const urlAppScript = 'https://script.google.com/macros/s/AKfycbw-sDHp-YZ3O5d0XvnTAnLUCvdNvehv86bbdUyDGz1es7P_EEs5Tz9XAcoE11E0FmpgZg/exec';
     
@@ -961,37 +986,35 @@ rsvpForm.addEventListener('submit', function (e) {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' }
     }).then(response => response.json());
 
-    // Promesa 2: Temporizador para la animación de la moto (5200ms exactos como en tu CSS)
-    const animationPromise = new Promise(resolve => setTimeout(resolve, 5200));
+    // Promesa 2: Temporizador para la animación de la moto (5200ms)
+    const animationPromise = new Promise(resolve => setTimeout(resolve, duration));
 
     // Esperar a que AMBAS cosas terminen
     Promise.all([fetchPromise, animationPromise])
     .then(([data]) => {
-        // --- NUEVO: Al finalizar con éxito, llegar al 100% ---
+        // Asegurarnos de que quede en 100% al terminar
         updateLoadingProgress(100, '¡Todo listo! ❤️');
 
-        // Desvanecer la pantalla de carga de la moto
+        // Desvanecer la pantalla de carga
         loadingOverlay.classList.remove('opacity-100');
         loadingOverlay.classList.add('opacity-0');
 
-        // Esperar a que se desvanezca antes de ocultarla y mostrar el éxito
         setTimeout(() => {
             loadingOverlay.classList.remove('flex');
             loadingOverlay.classList.add('hidden');
 
             if (data.status === 'success') {
                 localStorage.setItem(RSVP_STORAGE_KEY, JSON.stringify(payload));
-                renderSuccess(asisteGeneral); // Aquí ocurre la transición a la pantalla final
+                renderSuccess(asisteGeneral); 
              //   if (asisteGeneral === 'SI') createConfetti();
             }
         }, 500); 
     })
     .catch(error => {
-        // --- NUEVO: Limpiar los temporizadores para que la barra no siga subiendo si hay error ---
-        progressTimers.forEach(timer => clearTimeout(timer));
+        // --- NUEVO: Detener la barra si hay un error de red ---
+        cancelAnimationFrame(animationFrameId);
         updateLoadingProgress(0, 'Hubo un problema...');
 
-        // En caso de error, ocultar la animación y reactivar el botón
         loadingOverlay.classList.remove('flex', 'opacity-100');
         loadingOverlay.classList.add('hidden', 'opacity-0');
         submitBtn.disabled = false;
