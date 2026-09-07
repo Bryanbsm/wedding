@@ -500,31 +500,217 @@ botones.forEach(btn=>{
 })();
 
 /* -------------------------------------------------------------
-   4.2 AGREGAR AL CALENDARIO DEL CELULAR (archivo .ics descargable)
+   4.2 AGREGAR AL CALENDARIO
+   Google Calendar como prioridad + fallback .ICS
 ------------------------------------------------------------- */
+
 (function setupAddToCalendar() {
+
     const link = document.getElementById('add-to-calendar');
     if (!link) return;
 
-    const icsContent = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Bryan & Katherin//Boda//ES',
-        'CALSCALE:GREGORIAN',
-        'BEGIN:VEVENT',
-        'UID:boda-bryan-katherin-14112026@invitacion',
-        'DTSTAMP:20260101T000000Z',
-        'DTSTART:20261114T210000Z',
-        'DTEND:20261115T020000Z',
-        'SUMMARY:Boda de Bryan & Katherin',
-        'DESCRIPTION:Ceremonia religiosa en la Parroquia La Inmaculada\\, Belalcázar\\, Caldas.',
-        'LOCATION:Parroquia La Inmaculada\\, Belalcázar\\, Caldas',
-        'END:VEVENT',
-        'END:VCALENDAR'
-    ].join('\r\n');
+    // ---------------------------------------------------------
+    // DATOS DEL EVENTO
+    // ---------------------------------------------------------
 
-    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
-    link.href = URL.createObjectURL(blob);
+    const event = {
+        title: 'Boda de Bryan & Katherin',
+
+        description:
+            'Ceremonia religiosa en la Parroquia La Inmaculada, Belalcázar, Caldas.',
+
+        location:
+            'Parroquia La Inmaculada, Belalcázar, Caldas',
+
+        // Hora LOCAL de Colombia (UTC-5)
+        start: '2026-11-14T12:00:00-05:00',
+        end: '2026-11-14T19:00:00-05:00'
+    };
+
+
+    // ---------------------------------------------------------
+    // CONVERTIR FECHA A FORMATO GOOGLE CALENDAR
+    // YYYYMMDDTHHMMSSZ
+    // ---------------------------------------------------------
+
+    function formatGoogleDate(dateString) {
+
+        const date = new Date(dateString);
+
+        const pad = number =>
+            String(number).padStart(2, '0');
+
+        return (
+            date.getUTCFullYear() +
+            pad(date.getUTCMonth() + 1) +
+            pad(date.getUTCDate()) +
+            'T' +
+            pad(date.getUTCHours()) +
+            pad(date.getUTCMinutes()) +
+            pad(date.getUTCSeconds()) +
+            'Z'
+        );
+    }
+
+
+    // ---------------------------------------------------------
+    // URL DE GOOGLE CALENDAR
+    // ---------------------------------------------------------
+
+    function getGoogleCalendarUrl() {
+
+        const start = formatGoogleDate(event.start);
+        const end = formatGoogleDate(event.end);
+
+        const params = new URLSearchParams({
+            action: 'TEMPLATE',
+            text: event.title,
+            dates: `${start}/${end}`,
+            details: event.description,
+            location: event.location
+        });
+
+        return `https://calendar.google.com/calendar/render?${params.toString()}`;
+    }
+
+
+    // ---------------------------------------------------------
+    // CREAR ARCHIVO ICS
+    // ---------------------------------------------------------
+
+    function createICS() {
+
+        const icsContent = [
+            'BEGIN:VCALENDAR',
+            'VERSION:2.0',
+            'PRODID:-//Bryan & Katherin//Boda//ES',
+            'CALSCALE:GREGORIAN',
+            'METHOD:PUBLISH',
+
+            'BEGIN:VEVENT',
+
+            'UID:boda-Bryan-Katherin-14112026@invitacion',
+
+            `DTSTAMP:${formatGoogleDate(new Date().toISOString())}`,
+
+            // Colombia UTC-5
+            'DTSTART:20261114T170000Z',
+
+            'DTEND:20261115T000000Z',
+
+            'SUMMARY:Boda de Bryan & Katherin',
+
+            'DESCRIPTION:Ceremonia religiosa en la Parroquia La Inmaculada\\, Belalcázar\\, Caldas.',
+
+            'LOCATION:Parroquia La Inmaculada\\, Belalcázar\\, Caldas',
+
+            'END:VEVENT',
+            'END:VCALENDAR'
+        ].join('\r\n');
+
+        return new Blob(
+            [icsContent],
+            { type: 'text/calendar;charset=utf-8' }
+        );
+    }
+
+
+    // ---------------------------------------------------------
+    // FALLBACK .ICS
+    // ---------------------------------------------------------
+
+    function downloadICS() {
+
+        const blob = createICS();
+
+        const url = URL.createObjectURL(blob);
+
+        const tempLink = document.createElement('a');
+
+        tempLink.href = url;
+        tempLink.download = 'Boda-Bryan-y-Katherin.ics';
+
+        document.body.appendChild(tempLink);
+
+        tempLink.click();
+
+        document.body.removeChild(tempLink);
+
+        setTimeout(() => {
+            URL.revokeObjectURL(url);
+        }, 1000);
+    }
+
+
+    // ---------------------------------------------------------
+    // DETECTAR DISPOSITIVO
+    // ---------------------------------------------------------
+
+    function isIOS() {
+
+        return /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+               (navigator.platform === 'MacIntel' &&
+                navigator.maxTouchPoints > 1);
+    }
+
+
+    function isAndroid() {
+
+        return /Android/i.test(navigator.userAgent);
+    }
+
+
+    // ---------------------------------------------------------
+    // ACCIÓN PRINCIPAL
+    // ---------------------------------------------------------
+
+    link.addEventListener('click', function (e) {
+
+        e.preventDefault();
+
+        const googleCalendarUrl = getGoogleCalendarUrl();
+
+        // -----------------------------------------------------
+        // ANDROID
+        // Google Calendar tiene prioridad
+        // -----------------------------------------------------
+
+        if (isAndroid()) {
+
+        //    window.location.href = googleCalendarUrl;
+            window.open(googleCalendarUrl, '_blank', 'noopener,noreferrer');
+
+            return;
+        }
+
+
+        // -----------------------------------------------------
+        // IPHONE / IPAD
+        // Intentamos Google Calendar primero
+        // -----------------------------------------------------
+
+        if (isIOS()) {
+
+        //    window.location.href = googleCalendarUrl;
+            window.open(googleCalendarUrl, '_blank', 'noopener,noreferrer');
+
+            return;
+        }
+
+
+        // -----------------------------------------------------
+        // WINDOWS / LINUX / OTROS
+        // Google Calendar en navegador
+        // -----------------------------------------------------
+
+        window.open(
+            googleCalendarUrl,
+            '_blank',
+            'noopener,noreferrer'
+        );
+
+    });
+
 })();
 
 /* -------------------------------------------------------------

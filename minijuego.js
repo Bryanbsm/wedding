@@ -96,10 +96,29 @@ function showAchievement(text, duration = CONFIG.tiempoMostrarLogro) {
 
 // Verifica si llegaste a una meta de puntos para darte un logro
 function checkMilestones() {
-    if (score === 2) showAchievement("Sigue Buscando Corazones❤️");
-    if (score === 10) showAchievement("¡Encontraste 10 corazones!");
+    if (score === 1) showAchievement("Sigue Buscando Corazones ❤️");
+    if (score === 10) showAchievement("¡Encontraste 10 corazones! 👏");
+    if (score === 20) showAchievement("¡Cupido en entrenamiento! 🏹");
+    if (score === 30) showAchievement("Romántico empedernido 😍");
+    if (score === 40) showAchievement("¡Lluvia de amor! ☔❤️");
     if (score === 50) showAchievement("💙 Maestro del Amor 💙");
-    if (score === 100) showAchievement("💙 Maestro del Amor 💙");
+    if (score === 60) showAchievement("Corazón indomable 🔥");
+    if (score === 70) showAchievement("Cazador de sentimientos 🕵️‍♂️💖");
+    if (score === 80) showAchievement("¡Flechazo perfecto! 💘");
+    if (score === 90) showAchievement("Casanova virtual 😎✨");
+    
+    if (score === 110) showAchievement("Sobredosis de ternura 🧸💕");
+    if (score === 120) showAchievement("Latidos a mil por hora 💓🏎️");
+    if (score === 130) showAchievement("Máquina de dar amor 🤖💗");
+    if (score === 140) showAchievement("¡Imparable! Atracción fatal 🧲❤️");
+    if (score === 150) showAchievement("✨ Deidad del Romance ✨");
+    if (score === 160) showAchievement("👑 Leyenda de Corazones 👑");
+    if (score === 170) showAchievement("✨ Deidad del Romance ✨");
+    if (score === 180) showAchievement("❤️ El amor siempre encuentra el camino");
+    if (score === 190) showAchievement("💥 Explosión de amor 💥");
+    
+    if (score === 210) showAchievement("👑 Rey del Amor 👑");
+
     if (score === 1000) showAchievement("❤️ El amor siempre encuentra el camino");
     
     if (score > 100 && score % 100 === 0) {
