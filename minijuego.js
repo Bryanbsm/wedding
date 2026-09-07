@@ -98,8 +98,9 @@ function showAchievement(text, duration = CONFIG.tiempoMostrarLogro) {
 function checkMilestones() {
     if (score === 2) showAchievement("Sigue Buscando Corazones❤️");
     if (score === 10) showAchievement("¡Encontraste 10 corazones!");
-    if (score === 50) showAchievement("❤️ El amor siempre encuentra el camino");
+    if (score === 50) showAchievement("💙 Maestro del Amor 💙");
     if (score === 100) showAchievement("💙 Maestro del Amor 💙");
+    if (score === 1000) showAchievement("❤️ El amor siempre encuentra el camino");
     
     if (score > 100 && score % 100 === 0) {
         showAchievement(`¡Gran Maestro x${score/100}!`);

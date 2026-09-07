@@ -490,15 +490,21 @@ input:focus, textarea:focus {
 }
 
 /* Animación de avance de la moto (simulando barra de progreso) */
+/* Tu clase CSS existente con la mejora de origen */
 .animate-moto {
     animation: driveMoto 5.2s ease-in-out forwards;
+    
+    /* --- NUEVO: Cambia el punto de pivote a la rueda trasera --- */
+    /* Ajusta estos porcentajes (aprox abajo-izquierda) según la forma exacta de tu imagen de moto */
+    transform-origin: 20% 90%; 
 }
 
+/* Los keyframes son los mismos que en la Opción 1 */
 @keyframes driveMoto {
-    0% { left: -20%; }
-    40% { left: 35%; }
-    80% { left: 65%; }
-    100% { left: 120%; } /* Cruza y sale del contenedor al terminar 120%*/ 
+    0%   { left: -20%; transform: rotate(0deg); }
+    40%  { left: 35%;  transform: rotate(0deg); }
+    80%  { left: 65%;  transform: rotate(0deg); } /* Comienza a levantarse */
+    100% { left: 120%; transform: rotate(-37deg); } /* Sale haciendo el caballito */
 }
 /* Animación para los puntos suspensivos */
 .loading-dots::after {
