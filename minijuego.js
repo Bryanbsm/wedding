@@ -120,7 +120,7 @@ function checkMilestones() {
     if (score === 210) showAchievement("👑 Rey del Amor 👑");
 
     if (score >= 100 && score % 100 === 0) {
-        showAchievement(`¡Gran Maestro x${score/100}!`);
+        showAchievement(`¡💙Gran Maestro x${score/100}💙!`);
     }
 }
 

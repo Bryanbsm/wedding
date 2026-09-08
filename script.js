@@ -1119,7 +1119,7 @@ async function intentarPantallaCompleta() {
 function openEnvelope() {
     if (envelopeIsOpen || envelopeAnimating) return;
         // Intentar pantalla completa al abrir el sobre
-    intentarPantallaCompleta();
+    //intentarPantallaCompleta();
     envelopeAnimating = true;
     envelopeScene.classList.add('is-opening');
 
