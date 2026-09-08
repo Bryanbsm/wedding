@@ -213,3 +213,22 @@ document.addEventListener('visibilitychange', () => {
         fadeVolume(volumeBeforeHidden, 1000);
     }
 });
+
+
+
+/* -------------------------------------------------------------
+   VINCULACIÓN DEL AUDIO A LA INTERACCIÓN CON EL SOBRE
+------------------------------------------------------------- */
+const envelopeGateElement = document.getElementById('envelope-gate');
+
+if (envelopeGateElement) {
+    // Iniciar la música al hacer clic en el sobre
+    envelopeGateElement.addEventListener('click', () => {
+        startBackgroundMusic();
+    }, { once: true });
+    
+    // Iniciar la música al deslizar/tocar el sobre (pantallas táctiles)
+    envelopeGateElement.addEventListener('touchstart', () => {
+        startBackgroundMusic();
+    }, { once: true });
+}
