@@ -138,63 +138,34 @@ function createFloatingNote() {
 }
 
 function startBackgroundMusic() {
-        localStorage.removeItem(MUSIC_MUTE_KEY);
-
-    // Si el usuario la silenció,  iniciar
-    if (isMusicMutedByUser()) {
-        updateMusicButtonUI(false);
-        return;
-    }
-
-    // Evitar múltiples reproducciones
     if (musicHasStarted) return;
-
     musicHasStarted = true;
 
-    // IMPORTANTE:
-    // play() debe ejecutarse directamente como consecuencia
-    // del gesto del usuario.
+    // En móviles, la orden .play() DEBE ser inmediata y síncrona al toque.
+    // No podemos esperar al evento 'canplay'. El navegador gestionará el buffer solo.
     bgMusic.volume = 0;
-
     const playPromise = bgMusic.play();
-
-    if (playPromise) {
-        playPromise
-            .then(() => {
-                fadeVolume(INITIAL_VOLUME, 2000);
-                updateMusicButtonUI(true);
-            })
-            .catch((error) => {
-                console.warn('No se pudo iniciar la música:', error);
-
-                // Permitimos otro intento si el navegador bloqueó
-                // esta reproducción.
-                musicHasStarted = false;
-                updateMusicButtonUI(false);
-            });
+    
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            fadeVolume(INITIAL_VOLUME, 2000); 
+            updateMusicButtonUI(true);
+        }).catch(() => {
+            // Si el móvil lo bloquea por alguna política restrictiva extrema,
+            // reiniciamos el estado para que el botón funcione manualmente.
+            musicHasStarted = false;
+            updateMusicButtonUI(false);
+        });
     }
 
-    // Configurar el loop cuando termine la primera reproducción
     bgMusic.addEventListener('ended', function onFirstEnded() {
-
         if (musicIsLooping) return;
-
         setTimeout(() => {
-
-            if (isMusicMutedByUser()) return;
-
             musicIsLooping = true;
             bgMusic.loop = true;
             bgMusic.volume = LOOP_VOLUME;
-
-            const p = bgMusic.play();
-
-            if (p && p.catch) {
-                p.catch(() => {});
-            }
-
+            bgMusic.play().catch(() => {});
         }, 2000);
-
     }, { once: true });
 }
 
