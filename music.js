@@ -138,42 +138,64 @@ function createFloatingNote() {
 }
 
 function startBackgroundMusic() {
-    localStorage.removeItem(MUSIC_MUTE_KEY);
-    if (musicHasStarted) return;
+        localStorage.removeItem(MUSIC_MUTE_KEY);
+
+    // Si el usuario la silenció,  iniciar
     if (isMusicMutedByUser()) {
         updateMusicButtonUI(false);
         return;
     }
 
+    // Evitar múltiples reproducciones
+    if (musicHasStarted) return;
+
     musicHasStarted = true;
 
-    const beginPlayback = () => {
-        bgMusic.volume = 0;
-        const playPromise = bgMusic.play();
-        if (playPromise && playPromise.catch) {
-            playPromise.catch(() => { /* la invitación sigue funcionando sin música */ });
-        }
-        fadeVolume(INITIAL_VOLUME, 2000); // Usando la variable global
-        updateMusicButtonUI(true);
-    };
+    // IMPORTANTE:
+    // play() debe ejecutarse directamente como consecuencia
+    // del gesto del usuario.
+    bgMusic.volume = 0;
 
-    if (bgMusic.readyState >= 2) {
-        beginPlayback();
-    } else {
-        bgMusic.addEventListener('canplay', beginPlayback, { once: true });
+    const playPromise = bgMusic.play();
+
+    if (playPromise) {
+        playPromise
+            .then(() => {
+                fadeVolume(INITIAL_VOLUME, 2000);
+                updateMusicButtonUI(true);
+            })
+            .catch((error) => {
+                console.warn('No se pudo iniciar la música:', error);
+
+                // Permitimos otro intento si el navegador bloqueó
+                // esta reproducción.
+                musicHasStarted = false;
+                updateMusicButtonUI(false);
+            });
     }
 
+    // Configurar el loop cuando termine la primera reproducción
     bgMusic.addEventListener('ended', function onFirstEnded() {
+
         if (musicIsLooping) return;
+
         setTimeout(() => {
+
             if (isMusicMutedByUser()) return;
+
             musicIsLooping = true;
             bgMusic.loop = true;
             bgMusic.volume = LOOP_VOLUME;
+
             const p = bgMusic.play();
-            if (p && p.catch) p.catch(() => {});
+
+            if (p && p.catch) {
+                p.catch(() => {});
+            }
+
         }, 2000);
-    });
+
+    }, { once: true });
 }
 
 if (musicToggleBtn) {
@@ -216,19 +238,3 @@ document.addEventListener('visibilitychange', () => {
 
 
 
-/* -------------------------------------------------------------
-   VINCULACIÓN DEL AUDIO A LA INTERACCIÓN CON EL SOBRE
-------------------------------------------------------------- */
-const envelopeGateElement = document.getElementById('envelope-gate');
-
-if (envelopeGateElement) {
-    // Iniciar la música al hacer clic en el sobre
-    envelopeGateElement.addEventListener('click', () => {
-        startBackgroundMusic();
-    }, { once: true });
-    
-    // Iniciar la música al deslizar/tocar el sobre (pantallas táctiles)
-    envelopeGateElement.addEventListener('touchstart', () => {
-        startBackgroundMusic();
-    }, { once: true });
-}
