@@ -933,7 +933,7 @@ rsvpForm.addEventListener('submit', function (e) {
     }, 10);
 
     // --- NUEVO: Animación fluida de la barra de progreso ---
-    const duration = 5500; // 6.2 segundos exactos
+    const duration = 5900; // 6.2 segundos exactos
     const startTime = Date.now();
     let animationFrameId;
 
@@ -945,14 +945,12 @@ rsvpForm.addEventListener('submit', function (e) {
 
         // Cambiar el mensaje según el porcentaje actual
         let message = 'Preparando motores...';
-        if (percent >= 25 && percent < 55) {
+        if (percent >= 25 && percent < 80) {
             message = 'Registrando respuesta...';
-        } else if (percent >= 50 && percent < 80) {
-            message = 'Almacenando confirmación...';
         } else if (percent >= 80 && percent < 100) {
             message = 'Casi terminamos...';
         } else if (percent === 100) {
-            message = '¡Todo listo! ❤️';
+            message = '¡Todo listo! 💙';
         }
 
         updateLoadingProgress(percent, message);
@@ -993,7 +991,7 @@ rsvpForm.addEventListener('submit', function (e) {
     Promise.all([fetchPromise, animationPromise])
     .then(([data]) => {
         // Asegurarnos de que quede en 100% al terminar
-        updateLoadingProgress(100, '¡Todo listo! ❤️');
+        updateLoadingProgress(100, '¡Todo listo! 💙');
 
         // Desvanecer la pantalla de carga
         loadingOverlay.classList.remove('opacity-100');
