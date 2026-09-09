@@ -38,7 +38,7 @@ function hidePreloader() {
    8. SISTEMA DE MÚSICA PREMIUM
 ------------------------------------------------------------- */
 // NUEVA VARIABLE GLOBAL PARA EL VOLUMEN INICIAL
-const INITIAL_VOLUME = 0.15; 
+const INITIAL_VOLUME = 0.1; 
 
 const musicToggleBtn = document.getElementById('music-toggle-btn');
 const MUSIC_MUTE_KEY = 'bk_music_muted';
@@ -138,6 +138,7 @@ function createFloatingNote() {
 }
 
 function startBackgroundMusic() {
+    localStorage.removeItem(MUSIC_MUTE_KEY);
     if (musicHasStarted) return;
     musicHasStarted = true;
 
@@ -171,32 +172,30 @@ function startBackgroundMusic() {
 
 if (musicToggleBtn) {
     musicToggleBtn.addEventListener('click', () => {
-           pulseButton(musicToggleBtn);
-    if (navigator.vibrate) navigator.vibrate(20);
+        pulseButton(musicToggleBtn);
+        if (navigator.vibrate) navigator.vibrate(20);
 
-    // Si nunca llegó a arrancar (bloqueado por el navegador), reintenta en vez de "silenciar"
-    if (!musicHasStarted) {
-        startBackgroundMusic();
-        return;
-    }
+        // Si nunca llegó a arrancar, la iniciamos
+        if (!musicHasStarted) {
+            startBackgroundMusic();
+            return;
+        }
 
-    const currentlyMuted = isMusicMutedByUser();
+        const currentlyMuted = isMusicMutedByUser();
+        
         if (!currentlyMuted) {
+            // ESTÁ SONANDO -> LO SILENCIAMOS
             localStorage.setItem(MUSIC_MUTE_KEY, 'true');
             fadeVolume(0, 400);
             setTimeout(() => bgMusic.pause(), 420);
             updateMusicButtonUI(false);
         } else {
+            // ESTÁ SILENCIADO -> LO REACTIVAMOS
             localStorage.removeItem(MUSIC_MUTE_KEY);
-            if (!musicHasStarted) {
-                startBackgroundMusic();
-            } else {
-                const target = musicIsLooping ? LOOP_VOLUME : INITIAL_VOLUME;
-                const p = bgMusic.play();
-                if (p && p.catch) p.catch(() => {});
-                fadeVolume(target, 1000);
-                updateMusicButtonUI(true);
-            }
+            const target = musicIsLooping ? LOOP_VOLUME : INITIAL_VOLUME;
+            bgMusic.play().catch(() => {});
+            fadeVolume(target, 1000);
+            updateMusicButtonUI(true);
         }
     });
 }
