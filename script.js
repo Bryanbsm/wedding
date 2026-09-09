@@ -1179,20 +1179,27 @@ envelopeGate.addEventListener('wheel', (e) => {
 }, { passive: true });
 
 let touchStartY = 0;
-let swipeDetected = false;
+let audioUnlockAttempted = false;
+
+function tryUnlockAudio() {
+    if (audioUnlockAttempted) return;
+    audioUnlockAttempted = true;
+    startBackgroundMusic();
+}
 
 envelopeGate.addEventListener('touchstart', (e) => {
     touchStartY = e.touches[0].clientY;
-    swipeDetected = false;
+    tryUnlockAudio();               // clave: dispara el audio aquí, apenas toca, no cuando se confirma el swipe
 }, { passive: true });
 
 envelopeGate.addEventListener('touchmove', (e) => {
-    if (touchStartY - e.touches[0].clientY > 12) swipeDetected = true;
+    if (touchStartY - e.touches[0].clientY > 12) openEnvelope();
 }, { passive: true });
 
-envelopeGate.addEventListener('touchend', () => {
-    if (swipeDetected) openEnvelope();
-}, { passive: true });
+envelopeGate.addEventListener('click', () => {
+    tryUnlockAudio();
+    openEnvelope();
+});
 
 // Si el usuario baja por toda la invitación y luego regresa arriba,
 // la carta vuelve a guardar su estado dentro del sobre.
