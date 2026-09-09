@@ -65,7 +65,7 @@ lucide.createIcons();
             let progress = 0;
             
             const interval = setInterval(() => {
-                progress += Math.floor(Math.random() * 11) + 3;
+                progress += Math.floor(Math.random() * 5) + 3;
                 if (progress >= 100) {
                     progress = 100;
                     clearInterval(interval);
@@ -1179,27 +1179,23 @@ envelopeGate.addEventListener('wheel', (e) => {
 }, { passive: true });
 
 let touchStartY = 0;
-let audioUnlockAttempted = false;
-
-function tryUnlockAudio() {
-    if (audioUnlockAttempted) return;
-    audioUnlockAttempted = true;
-    startBackgroundMusic();
-}
+let swipeDetected = false;
 
 envelopeGate.addEventListener('touchstart', (e) => {
     touchStartY = e.touches[0].clientY;
-    tryUnlockAudio();               // clave: dispara el audio aquí, apenas toca, no cuando se confirma el swipe
+    swipeDetected = false;
 }, { passive: true });
 
 envelopeGate.addEventListener('touchmove', (e) => {
-    if (touchStartY - e.touches[0].clientY > 12) openEnvelope();
+    e.preventDefault(); // clave: evita que Android lo clasifique como "scroll" y descalifique el gesto
+    if (touchStartY - e.touches[0].clientY > 12) swipeDetected = true;
+}, { passive: false }); // debe dejar de ser passive para poder usar preventDefault
+
+envelopeGate.addEventListener('touchend', () => {
+    if (swipeDetected) openEnvelope(); // openEnvelope() ya llama a startBackgroundMusic()
 }, { passive: true });
 
-envelopeGate.addEventListener('click', () => {
-    tryUnlockAudio();
-    openEnvelope();
-});
+envelopeGate.addEventListener('click', openEnvelope);
 
 // Si el usuario baja por toda la invitación y luego regresa arriba,
 // la carta vuelve a guardar su estado dentro del sobre.
