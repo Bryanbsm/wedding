@@ -946,9 +946,9 @@ rsvpForm.addEventListener('submit', function (e) {
         // Cambiar el mensaje según el porcentaje actual
         let message = 'Preparando motores...';
         if (percent >= 25 && percent < 55) {
-            message = 'Registrando tu respuesta...';
+            message = 'Registrando respuesta...';
         } else if (percent >= 50 && percent < 80) {
-            message = 'Guardando tu confirmación...';
+            message = 'Almacenando confirmación...';
         } else if (percent >= 80 && percent < 100) {
             message = 'Casi terminamos...';
         } else if (percent === 100) {

@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (loadingOverlay && !loadingOverlay.classList.contains('hidden') && !isGameRunning) {
                     startGame();
                 }
-            }, 500);
+            }, 100);
         });
     }
 
