@@ -1179,11 +1179,19 @@ envelopeGate.addEventListener('wheel', (e) => {
 }, { passive: true });
 
 let touchStartY = 0;
+let swipeDetected = false;
+
 envelopeGate.addEventListener('touchstart', (e) => {
     touchStartY = e.touches[0].clientY;
+    swipeDetected = false;
 }, { passive: true });
+
 envelopeGate.addEventListener('touchmove', (e) => {
-    if (touchStartY - e.touches[0].clientY > 12) openEnvelope();
+    if (touchStartY - e.touches[0].clientY > 12) swipeDetected = true;
+}, { passive: true });
+
+envelopeGate.addEventListener('touchend', () => {
+    if (swipeDetected) openEnvelope();
 }, { passive: true });
 
 // Si el usuario baja por toda la invitación y luego regresa arriba,

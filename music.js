@@ -171,11 +171,16 @@ function startBackgroundMusic() {
 
 if (musicToggleBtn) {
     musicToggleBtn.addEventListener('click', () => {
-        pulseButton(musicToggleBtn);
-        if (navigator.vibrate) navigator.vibrate(20);
+           pulseButton(musicToggleBtn);
+    if (navigator.vibrate) navigator.vibrate(20);
 
-        const currentlyMuted = isMusicMutedByUser();
+    // Si nunca llegó a arrancar (bloqueado por el navegador), reintenta en vez de "silenciar"
+    if (!musicHasStarted) {
+        startBackgroundMusic();
+        return;
+    }
 
+    const currentlyMuted = isMusicMutedByUser();
         if (!currentlyMuted) {
             localStorage.setItem(MUSIC_MUTE_KEY, 'true');
             fadeVolume(0, 400);
