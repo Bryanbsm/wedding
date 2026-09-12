@@ -222,7 +222,7 @@ window.familiasData = {
     ],
     "1472049K": [
         "JHONATAN GONZALES",
-        "COMPAÑANTE"
+        "ACOMPAÑANTE"
     ],
     "1532051K": [
         "YURANI ALEGRIA",
