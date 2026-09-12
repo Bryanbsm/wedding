@@ -20,7 +20,7 @@ lucide.createIcons();
         function applyTheme(mode) {
             const isDark = mode === 'dark';
             htmlElement.classList.toggle('dark', isDark);
-            htmlElement.classList.toggle('light', !isDark);
+            htmlElement.classList.toggle('dark', !isDark);
             if (themeToggleBtn) {
                 themeToggleBtn.setAttribute('aria-pressed', String(isDark));
                 themeToggleBtn.title = isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
