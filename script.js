@@ -7,6 +7,12 @@
 // Inicializa los iconos de Lucide para que se dibujen en la página.
 lucide.createIcons();
   
+
+// --- Lógica del Modo Oscuro (Forzado siempre) ---
+const htmlElement = document.documentElement;
+htmlElement.classList.add('dark');
+htmlElement.classList.remove('light');
+
                 // Resto de Scripts
         function lockScroll() {
             document.documentElement.classList.add('overflow-hidden');
