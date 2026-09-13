@@ -14,7 +14,7 @@ lucide.createIcons();
 
         function getTimeBasedTheme() {
             const hour = new Date().getHours();
-            return hour >= 18 || hour < 6 ? 'dark' : 'light';
+            return hour >= 18 || hour < 6 ? 'dark' : 'dark';
         }
 
         function applyTheme(mode) {
