@@ -7,45 +7,7 @@
 // Inicializa los iconos de Lucide para que se dibujen en la página.
 lucide.createIcons();
 
-  // --- Lógica del Modo Día/Noche ---
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const htmlElement = document.documentElement;
-        const storageKey = 'wedding-theme-mode';
-
-        function getTimeBasedTheme() {
-            const hour = new Date().getHours();
-            return hour >= 18 || hour < 6 ? 'dark' : 'dark';
-        }
-
-        function applyTheme(mode) {
-            const isDark = mode === 'dark';
-            htmlElement.classList.toggle('dark', isDark);
-            htmlElement.classList.toggle('dark', !isDark);
-            if (themeToggleBtn) {
-                themeToggleBtn.setAttribute('aria-pressed', String(isDark));
-                themeToggleBtn.title = isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro';
-            }
-        }
-
-        function getInitialTheme() {
-            const saved = localStorage.getItem(storageKey);
-            if (saved === 'dark' || saved === 'light') {
-                return saved;
-            }
-            return getTimeBasedTheme();
-        }
-
-        let currentTheme = getInitialTheme();
-        applyTheme(currentTheme);
-
-        themeToggleBtn?.addEventListener('click', () => {
-            const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            currentTheme = nextTheme;
-            localStorage.setItem(storageKey, nextTheme);
-            applyTheme(nextTheme);
-            if (navigator.vibrate) navigator.vibrate(50); // Pequeña vibración al cambiar
-        });
-
+  
                 // Resto de Scripts
         function lockScroll() {
             document.documentElement.classList.add('overflow-hidden');
