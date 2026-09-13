@@ -6,7 +6,6 @@
 
 // Inicializa los iconos de Lucide para que se dibujen en la página.
 lucide.createIcons();
-
   
                 // Resto de Scripts
         function lockScroll() {
